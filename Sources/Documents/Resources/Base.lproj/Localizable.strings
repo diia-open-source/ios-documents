@@ -1,0 +1,46 @@
+// MARK: - General
+"general_number_copied" = "Номер скопійовано";
+"general_translate_ukrainian" = "Перекласти українською";
+"general_translate_english" = "Перекласти англійською";
+
+// MARK: - DriverLicense
+"driver_birthday" = "Дата народження: %@";
+"driver_issued_by" = "Видав:\n%@";
+
+"driver_action_lost" = "Як відновити посвідчення";
+"driver_lost_title" = "Як відновити посвідчення водія";
+"driver_lost_description" = "Приїхати у територіальний сервісний центр МВС з такими документами:\n\n1. Паспорт громадянина України\n\n2. Копія ідентифікаційного номера фізичної особи\n\n3. Медична довідка\n\n4. Видана поліцією довідка (у разі викрадення)";
+
+"driver_error_photo" = "У реєстрі немає фото 😔";
+"driver_error_photo_descr" = "Запишіться в електронну чергу до сервісного центру МВС та подайте офлайн-заяву про заміну посвідчення.";
+"driver_error_need_verification" = "Ваш документ потребує верифікації 😔";
+"driver_error_need_verification_descr" = "Перейдіть до кабінету водія та заповніть онлайн-форму.";
+"driver_error_need_verification_descr_mvs" = "Будь ласка, зверніться до найближчого сервісного центру МВС.";
+"driver_error_old_format" = "Документ старого зразка 😔";
+"driver_error_old_format_descr" = "Запишіться в електронну чергу, щоб його оновити та додати до застосунку.";
+"driver_error_action" = "Записатися";
+"driver_error_to_driver_action" = "До кабінету водія";
+"driver_error_to_driver_search_action" = "Знайти адресу";
+
+"driver_error_photo_en" = "There is no photo in the registry 😔";
+"driver_error_photo_descr_en" = "Register in the electronic queue to update your photo. It will appear in the application afterward.";
+"driver_error_need_verification_en" = "Verification required for your document 😔";
+"driver_error_need_verification_descr_en" = "Access your Driver‘s Account and complete the online form.";
+"driver_error_old_format_en" = "You have an old document 😔";
+"driver_error_old_format_descr_en" = "Register in the electronic queue to update document. It will appear in the application afterward.";
+"driver_error_action_en" = "Electronic queue";
+"driver_error_to_driver_action_en" = "Open Driver‘s Account";
+
+// MARK: - Action Titles
+"action_title_full_info" = "Повна інформація";
+
+// MARK: - DriverLicense Replacement
+"driver_license_replacement" = "Заміна посвідчення";
+
+// MARK: - DocumentsGeneral
+"document_general_change_documents_order" = "Змінити порядок документів";
+"document_general_rate" = "Оцінити документ";
+"document_general_change_stack_documents_order" = "Змінити порядок відображення";
+
+// MARK: - Menu
+"menu_faq" = "Питання та відповіді";

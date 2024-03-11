@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="vjK-EK-tyr" customClass="AddNewDocumentView" customModule="DiiaDocumentsCore">
+            <rect key="frame" x="0.0" y="0.0" width="311" height="424"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="9Sy-vX-ftU">
+                    <rect key="frame" x="0.0" y="48" width="311" height="342"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xBP-bb-UMU" userLabel="TopView">
+                            <rect key="frame" x="0.0" y="0.0" width="311" height="167"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVt-cA-6Nr">
+                                    <rect key="frame" x="0.0" y="0.0" width="311" height="167"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Em9-y7-N7G">
+                                            <rect key="frame" x="52" y="50.5" width="207" height="66"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imagePlusBlack" translatesAutoresizingMaskIntoConstraints="NO" id="9Ji-Tp-C1F">
+                                                    <rect key="frame" x="87.5" y="0.0" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="32" id="ADe-YM-fRd"/>
+                                                        <constraint firstAttribute="width" secondItem="9Ji-Tp-C1F" secondAttribute="height" multiplier="1:1" id="KUo-9e-YvV"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Додати документ]" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="AV3-dp-X0S">
+                                                    <rect key="frame" x="6" y="44" width="195" height="22"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Er9-u7-2EH">
+                                            <rect key="frame" x="20" y="20" width="271" height="127"/>
+                                            <connections>
+                                                <action selector="addDocumentButtonTapped:" destination="vjK-EK-tyr" eventType="touchUpInside" id="BjL-mD-FOm"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Em9-y7-N7G" secondAttribute="trailing" constant="52" id="3wu-Bg-3Z1"/>
+                                        <constraint firstAttribute="trailing" secondItem="Er9-u7-2EH" secondAttribute="trailing" constant="20" id="PQx-44-mIt"/>
+                                        <constraint firstItem="Er9-u7-2EH" firstAttribute="leading" secondItem="fVt-cA-6Nr" secondAttribute="leading" constant="20" id="RkY-th-8co"/>
+                                        <constraint firstAttribute="bottom" secondItem="Er9-u7-2EH" secondAttribute="bottom" constant="20" id="ZaC-4v-CAz"/>
+                                        <constraint firstItem="Em9-y7-N7G" firstAttribute="leading" secondItem="fVt-cA-6Nr" secondAttribute="leading" constant="52" id="bB5-vc-TCl"/>
+                                        <constraint firstItem="Em9-y7-N7G" firstAttribute="centerY" secondItem="fVt-cA-6Nr" secondAttribute="centerY" id="pMA-9T-ehO"/>
+                                        <constraint firstItem="Er9-u7-2EH" firstAttribute="top" secondItem="fVt-cA-6Nr" secondAttribute="top" constant="20" id="rBG-AX-8Lj"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="fVt-cA-6Nr" secondAttribute="trailing" id="CNG-tN-psT"/>
+                                <constraint firstAttribute="bottom" secondItem="fVt-cA-6Nr" secondAttribute="bottom" id="WNE-2M-Xvc"/>
+                                <constraint firstItem="fVt-cA-6Nr" firstAttribute="leading" secondItem="xBP-bb-UMU" secondAttribute="leading" id="gbw-WB-IfD"/>
+                                <constraint firstItem="fVt-cA-6Nr" firstAttribute="top" secondItem="xBP-bb-UMU" secondAttribute="top" id="mKC-IJ-Gtm"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y3e-ap-Qal" userLabel="BottomView">
+                            <rect key="frame" x="0.0" y="175" width="311" height="167"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bay-Zf-B95">
+                                    <rect key="frame" x="0.0" y="0.0" width="311" height="167"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="ZUE-RP-EgJ">
+                                            <rect key="frame" x="52" y="40" width="207" height="87.5"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeOrder" translatesAutoresizingMaskIntoConstraints="NO" id="Djq-PL-jlk">
+                                                    <rect key="frame" x="87.5" y="0.0" width="32" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="Djq-PL-jlk" secondAttribute="height" multiplier="1:1" id="75B-5X-cGR"/>
+                                                        <constraint firstAttribute="height" constant="32" id="8S9-QJ-t0p"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Змінити порядок документів]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Kti-N0-fKk">
+                                                    <rect key="frame" x="10" y="44" width="187.5" height="43.5"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2P-EO-ffj">
+                                            <rect key="frame" x="20" y="20" width="271" height="127"/>
+                                            <connections>
+                                                <action selector="changeOrderButtonTapped:" destination="vjK-EK-tyr" eventType="touchUpInside" id="iir-gq-CQl"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="ZUE-RP-EgJ" secondAttribute="trailing" constant="52" id="0UT-s8-eyd"/>
+                                        <constraint firstAttribute="trailing" secondItem="j2P-EO-ffj" secondAttribute="trailing" constant="20" id="5Hf-eE-lIS"/>
+                                        <constraint firstItem="ZUE-RP-EgJ" firstAttribute="centerY" secondItem="bay-Zf-B95" secondAttribute="centerY" id="D0v-bA-lj4"/>
+                                        <constraint firstItem="j2P-EO-ffj" firstAttribute="top" secondItem="bay-Zf-B95" secondAttribute="top" constant="20" id="PdW-qd-I5b"/>
+                                        <constraint firstItem="ZUE-RP-EgJ" firstAttribute="leading" secondItem="bay-Zf-B95" secondAttribute="leading" constant="52" id="bYA-0x-h2X"/>
+                                        <constraint firstAttribute="bottom" secondItem="j2P-EO-ffj" secondAttribute="bottom" constant="20" id="v5P-Ws-MSl"/>
+                                        <constraint firstItem="j2P-EO-ffj" firstAttribute="leading" secondItem="bay-Zf-B95" secondAttribute="leading" constant="20" id="xmW-Ci-VPW"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="bay-Zf-B95" firstAttribute="top" secondItem="y3e-ap-Qal" secondAttribute="top" id="1bX-al-Xfv"/>
+                                <constraint firstAttribute="trailing" secondItem="bay-Zf-B95" secondAttribute="trailing" id="ZAa-4O-zBc"/>
+                                <constraint firstAttribute="bottom" secondItem="bay-Zf-B95" secondAttribute="bottom" id="e9e-Rd-5y7"/>
+                                <constraint firstItem="bay-Zf-B95" firstAttribute="leading" secondItem="y3e-ap-Qal" secondAttribute="leading" id="flw-eU-XcZ"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="y3e-ap-Qal" firstAttribute="height" secondItem="xBP-bb-UMU" secondAttribute="height" id="abt-GC-jbJ"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="oLv-Ee-6Su"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="9Sy-vX-ftU" firstAttribute="trailing" secondItem="oLv-Ee-6Su" secondAttribute="trailing" id="DND-T3-91g"/>
+                <constraint firstItem="9Sy-vX-ftU" firstAttribute="leading" secondItem="oLv-Ee-6Su" secondAttribute="leading" id="QXz-kf-eZ6"/>
+                <constraint firstItem="9Sy-vX-ftU" firstAttribute="bottom" secondItem="oLv-Ee-6Su" secondAttribute="bottom" id="Qug-AS-QYc"/>
+                <constraint firstItem="oLv-Ee-6Su" firstAttribute="top" secondItem="9Sy-vX-ftU" secondAttribute="top" id="SgI-jy-86C"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="addDocumentButton" destination="Er9-u7-2EH" id="WaF-Xp-hRz"/>
+                <outlet property="addDocumentLabel" destination="AV3-dp-X0S" id="oh7-UL-MHW"/>
+                <outlet property="addDocumentView" destination="fVt-cA-6Nr" id="Qty-UQ-TGQ"/>
+                <outlet property="changeOrderButton" destination="j2P-EO-ffj" id="riN-CH-rsU"/>
+                <outlet property="changeOrderLabel" destination="Kti-N0-fKk" id="iZx-c2-i1E"/>
+                <outlet property="changeOrderView" destination="bay-Zf-B95" id="Zrv-hu-Wgl"/>
+            </connections>
+            <point key="canvasLocation" x="174.63768115942031" y="251.11607142857142"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="changeOrder" width="32" height="32"/>
+        <image name="imagePlusBlack" width="40" height="40"/>
+    </resources>
+</document>

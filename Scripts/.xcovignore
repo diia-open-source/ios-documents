@@ -1,0 +1,28 @@
+
+# UI
+- .*ViewController.*.swift
+- .*View.swift
+- .*UIView.*.swift
+- .*Cell.*.swift
+
+# General
+- .*Module.swift
+- .*APIClient.swift
+- .*API.swift
+
+# No any logic
+- AppConstants.swift
+- AddDocumentsService.swift
+- DocumentsCollectionModuleСontext.swift
+- DriverLicenseStatus+Extensions.swift
+- DriverLicenseStatus.swift
+- DocumentStackIconAppearance.swift
+- .*Response.swift
+- .*Type.swift
+- .*Model.swift
+- .*Protocol.swift
+- DocumentsCommonConfiguration.swift
+
+# Resource Files
+- R+Strings.swift
+- R+images.swift

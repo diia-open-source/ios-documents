@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  
+
+*/
+
+// MARK: - General
+"general_qr_code" = "QR-код";
+"general_barcode" = "Штрихкод";
+"general_update_code_action" = "Оновити код";
+"general_update_code_action_en" = "Update the code";
+"document_general_qr_code_en" = "QR-code";
+"document_general_barcode_en" = "Barcode";
+"document_general_qr_session_time" = "QR-КОД ДІЯТИМЕ 3 ХВ";
+"document_general_retry" = "Спробувати ще раз";
+"document_general_retry_en" = "Try again";
+"document_general_session_time" = "Код діятеме ще";
+"document_general_registry_error" = "Немає доступу\nдо реєстру";
+"document_general_registry_error_en" = "No registry access";
+"document_general_registry_error_description" = "Відсутнє підключення до реєстру. Будь ласка, спробуйте пізніше.";
+"document_general_registry_error_description_en" = "There is no connection to the registry. Please try again later.";
+"error_code_expired" = "Час дії коду закінчився";
+"error_code_expired_en" = "The code has expired";
+
+// MARK: - Accessibility
+"documents_collection_accessibility_verification_view_content" = "QR-код документа. Він діятиме 3 хвилини.";
+"documents_collection_accessibility_verification_view_offline" = "Документ “%@” Неактивний";
+"documents_collection_accessibility_verification_view" = "Документ “%@”";
+"documents_collection_accessibility_verification_view_hint" = "Натисніть, щоб відкрити інформацію про документ.";
+"document_general_error_codes_not_loaded" = "Коди для перевірки\nне завантажено";
+"document_general_error_codes_not_loaded_en" = "Verification codes failed\nto upload";

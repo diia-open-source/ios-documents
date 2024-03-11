@@ -1,0 +1,51 @@
+{
+  "configurations" : [
+    {
+      "id" : "53380972-21BF-486B-AE3C-325119C47359",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "DiiaDocumentsCore",
+          "name" : "DiiaDocumentsCore"
+        },
+        {
+          "containerPath" : "container:",
+          "identifier" : "DiiaDocumentsCommonTypes",
+          "name" : "DiiaDocumentsCommonTypes"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DocumentsCoreTests",
+        "name" : "DocumentsCoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DocumentsTests",
+        "name" : "DocumentsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DiiaDocumentsCommonTypesTests",
+        "name" : "DiiaDocumentsCommonTypesTests"
+      }
+    }
+  ],
+  "version" : 1
+}

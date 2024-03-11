@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Documents Collection View Controller-->
+        <scene sceneID="e4G-La-ZCj">
+            <objects>
+                <viewController storyboardIdentifier="DocumentsCollectionViewController" id="RKe-bt-0Ot" customClass="DocumentsCollectionViewController" customModule="DiiaDocumentsCore" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pL3-oo-wDg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NfS-h6-N6u">
+                                <rect key="frame" x="0.0" y="48" width="414" height="798"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="lVD-NH-7aQ">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbB-Ja-4kC" customClass="ScrollingPageControl" customModule="DiiaUIComponents">
+                                <rect key="frame" x="165.5" y="647" width="83" height="12"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="12" id="8P5-PB-xKy"/>
+                                    <constraint firstAttribute="width" constant="83" id="AZs-Rv-nM6"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZCk-QJ-8MN" customClass="FloatingTextLabel" customModule="DiiaUIComponents">
+                                <rect key="frame" x="0.0" y="830" width="414" height="32"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="XPH-AY-2yB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="h12-bq-KIZ"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="NfS-h6-N6u" firstAttribute="leading" secondItem="h12-bq-KIZ" secondAttribute="leading" id="EFf-XW-7y6"/>
+                            <constraint firstItem="ZCk-QJ-8MN" firstAttribute="trailing" secondItem="h12-bq-KIZ" secondAttribute="trailing" id="Jda-5x-cM7"/>
+                            <constraint firstItem="NfS-h6-N6u" firstAttribute="top" secondItem="h12-bq-KIZ" secondAttribute="top" id="MPN-qx-8TH"/>
+                            <constraint firstItem="dbB-Ja-4kC" firstAttribute="top" secondItem="NfS-h6-N6u" secondAttribute="centerY" constant="200" id="eDJ-ai-coy"/>
+                            <constraint firstItem="h12-bq-KIZ" firstAttribute="bottom" secondItem="NfS-h6-N6u" secondAttribute="bottom" constant="16" id="eM4-u1-mF8"/>
+                            <constraint firstItem="ZCk-QJ-8MN" firstAttribute="bottom" secondItem="h12-bq-KIZ" secondAttribute="bottom" id="eUm-bT-owG"/>
+                            <constraint firstItem="ZCk-QJ-8MN" firstAttribute="leading" secondItem="h12-bq-KIZ" secondAttribute="leading" id="ffa-tR-KQc"/>
+                            <constraint firstItem="h12-bq-KIZ" firstAttribute="trailing" secondItem="NfS-h6-N6u" secondAttribute="trailing" id="jtY-Fb-1gE"/>
+                            <constraint firstItem="dbB-Ja-4kC" firstAttribute="centerX" secondItem="pL3-oo-wDg" secondAttribute="centerX" id="pPM-5o-t56"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="collectionView" destination="NfS-h6-N6u" id="DlO-aW-wx5"/>
+                        <outlet property="dateLabelTopFromDocumentCenterConstraint" destination="eDJ-ai-coy" id="vjI-xZ-WHM"/>
+                        <outlet property="scrollingPageControl" destination="dbB-Ja-4kC" id="6D7-1v-G9F"/>
+                        <outlet property="statusTextView" destination="ZCk-QJ-8MN" id="j41-Sq-o7p"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3dy-99-fHC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="115.94202898550725" y="104.46428571428571"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
