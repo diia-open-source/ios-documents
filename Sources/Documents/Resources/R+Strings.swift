@@ -18,6 +18,11 @@ internal extension R {
         case driver_error_action
         case driver_error_to_driver_action
         case driver_error_to_driver_search_action
+        case driver_error_destroyed
+        case driver_error_destroyed_description
+        case driver_error_destroyed_action
+        case driver_error_deposited_title
+        case driver_error_deposited_description
 
         case driver_error_photo_en
         case driver_error_photo_descr_en

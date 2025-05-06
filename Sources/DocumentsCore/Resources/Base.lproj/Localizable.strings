@@ -2,11 +2,13 @@
 "document_general_reachability_error" = "Немає доступу до інтернету. Дані не оновлюються • Немає доступу до інтернету. Дані не оновлюються • ";
 "document_general_change_documents_order" = "Змінити порядок документів";
 "document_general_add_document" = "Додати документ";
+"document_general_error_codes_not_loaded" = "Коди для перевірки\nне завантажено";
+"document_general_error_codes_not_loaded_en" = "Verification codes failed\nto upload";
 
 // MARK: - Accessibility
-"documents_collection_accessibility_page_control" = "Список: документ %@ з %@";
-"documents_collection_accessibility_page_control_hint" = "Проведіть пальцем вгору або вниз, щоб змінити значення";
 "documents_collection_accessibility_reachability_error" = "Немає доступу до інтернету. Дані не оновлюються.";
 
 // MARK: - General
 "general_accessibility_close" = "Закрити";
+"document_general_retry" = "Спробувати ще раз";
+"document_general_retry_en" = "Try again";

@@ -5,8 +5,8 @@ import DiiaUIComponents
 public final class DocumentsCommonConfiguration {
     public static let shared = DocumentsCommonConfiguration()
     
-    var imageProvider: DSImageNameProvider?
-    var screenBrightnessService: ScreenBrightnessServiceProtocol?
+    public var imageProvider: DSImageNameProvider?
+    public var screenBrightnessService: ScreenBrightnessServiceProtocol?
     
     ///   - imageNameProvider: The image provider for DS components . Can be `nil` if not applicable.
     ///   - screenBrightnessService: A service responsible for managing screen brightness.

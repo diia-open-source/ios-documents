@@ -9,6 +9,8 @@ public enum DriverLicenseStatus: Int, Codable, EnumDecodable {
     case oldFormat = 1011
     case needVerification = 1012
     case notValid = 1016
+    case deposited = 1020
+    case destroyed = 1050
     
     case unknown = -1
     

@@ -7,7 +7,7 @@ let package = Package(
     name: "DiiaDocuments",
     defaultLocalization: "uk",
     platforms: [
-        .iOS(.v11)
+        .iOS(.v12)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
@@ -69,6 +69,7 @@ let package = Package(
                 .product(name: "DiiaCommonTypes", package: "ios-commontypes"),
                 .product(name: "DiiaUIComponents", package: "ios-uicomponents"),
                 "DiiaDocumentsCommonTypes",
+                "DiiaDocumentsCore"
             ],
             path: "Sources/Documents"
         ),

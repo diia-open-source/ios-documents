@@ -21,6 +21,11 @@
 "driver_error_action" = "Записатися";
 "driver_error_to_driver_action" = "До кабінету водія";
 "driver_error_to_driver_search_action" = "Знайти адресу";
+"driver_error_destroyed" = "Посвідчення анульоване 😔";
+"driver_error_destroyed_description" = "Ви вчасно не забрали своє посвідчення водія, його анулювали. Замовляйте через Дію нове.";
+"driver_error_destroyed_action" = "Здійснити заміну";
+"driver_error_deposited_title" = "Передано на зберігання😔";
+"driver_error_deposited_description" = "Посвідчення водія буде зберігатися в сервісному центрі МВС протягом року. Після цього його знищать.";
 
 "driver_error_photo_en" = "There is no photo in the registry 😔";
 "driver_error_photo_descr_en" = "Register in the electronic queue to update your photo. It will appear in the application afterward.";

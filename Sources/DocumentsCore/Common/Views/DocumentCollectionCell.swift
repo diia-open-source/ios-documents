@@ -3,6 +3,8 @@ import DiiaCommonTypes
 import DiiaUIComponents
 import DiiaDocumentsCommonTypes
 
+fileprivate typealias FrontView = FlippableEmbeddedView & FrontViewProtocol
+
 // MARK: - ViewModel
 struct DocumentCollectionCellViewModel {
     let documentData: MultiDataType<DocumentModel>
@@ -19,8 +21,8 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
     private var containerView: UIView = UIView()
     private var shadowView: UIView = UIView()
 
+    private var frontView: FrontView?
     private var backView: FlippableEmbeddedView?
-    private var frontView: FlippableEmbeddedView?
     
     private let bottomCardView: UIView = UIView()
     private let bottomCardShadowView: UIView = UIView()
@@ -125,6 +127,8 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
             blur: Constants.shadowBlur)
         
         backflipContainer.isHidden = true
+        
+        setupAccessibility()
     }
     
     override func prepareForReuse() {
@@ -164,6 +168,7 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
             bottomCardView.isHidden = true
             bottomCardShadowView.isHidden = true
             cardStackView.isHidden = true
+            frontView?.setErrorDescriptionTrailing(offset: .zero)
         case .multiple(let items):
             bottomCardView.isHidden = false
             bottomCardShadowView.isHidden = false
@@ -171,6 +176,10 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
             setupStackIcon(viewModel.documentData.getValue().docType?.stackIconAppearance)
             cardStackLabel.text = String(items.count)
             frontContainer.bringSubviewToFront(cardStackView)
+            
+            if let model = items.first?.model, model.docStatus != 200 {
+                frontView?.setErrorDescriptionTrailing(offset: Constants.descriptionLabelTrailingOffset)
+            }
         }
     }
     
@@ -188,11 +197,17 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
         bottomCardView.backgroundColor = color ?? .white
     }
     
+    private func setupAccessibility() {
+        cardStackView.isAccessibilityElement = true
+        cardStackView.accessibilityTraits = .button
+        cardStackView.accessibilityLabel = R.Strings.documents_card_stack_accessibility_label.localized()
+    }
+    
     // MARK: - Actions
     func flip(for type: VerificationType? = nil) {
-        bottomCardShadowView.isHidden = true
         guard let document = viewModel?.documentData.getValue() else { return }
-        
+        bottomCardShadowView.isHidden = true
+
         if !frontContainer.isHidden {
             let backFlipAction: Callback = { [weak self] in self?.flip(for: type) }
             if let backView = document.backView(for: type, flippingAction: backFlipAction) {
@@ -268,7 +283,8 @@ extension DocumentCollectionCell {
         static let shadowBlur: CGFloat = 23
         static let generalInset: CGFloat = 24
         static let cornerRadius: CGFloat = 24
-        
+        static let descriptionLabelTrailingOffset: CGFloat = 65
+
         static let cardStackIconSize: CGSize = .init(width: 24, height: 24)
         static let cardStackSpacing: CGFloat = 4
         static let cardStackInsets: UIEdgeInsets = .init(top: 0, left: 0, bottom: 32, right: 24)

@@ -9,7 +9,6 @@ protocol DocumentsCollectionContext {
     var documentsLoader: DocumentsLoaderProtocol { get }
     var docProvider: DocumentsProvider { get }
     var documentsStackRouterCreate: (DocumentAttributesProtocol) -> RouterProtocol { get }
-    var actionFabricAllowedCodes: [DocTypeCode] { get }
     var documentsReorderingConfiguration: DocumentsReorderingConfiguration { get }
     var pushNotificationsSharingSubject: PassthroughSubject<Void, Never> { get }
     var addDocumentsService: AddDocumentsServiceProtocol { get }
@@ -33,7 +32,6 @@ final class DocumentsCollectionPresenter: DocumentsCollectionAction, DocumentsLo
     private let context: DocumentsCollectionContext
 
     private var documents: [MultiDataType<DocumentModel>] = []
-    private var documentsUpdates: [String] = []
     private var scrollingDocType: DocTypeCode?
 
     private let bag = DisposeBag()
@@ -62,6 +60,7 @@ final class DocumentsCollectionPresenter: DocumentsCollectionAction, DocumentsLo
             .dispose(in: bag)
         
         NotificationCenter.default.addObserver(self, selector: #selector(documentsWasUpdated), name: DocumentsConstants.Notifications.documentsWasReordered, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(documentsModeWasSwitched(notification:)), name: DocumentsConstants.Notifications.documentsModeWasSwitched, object: nil)
         context.documentsLoader.addListener(listener: self)
 
         observeSharingRequest()
@@ -86,6 +85,17 @@ final class DocumentsCollectionPresenter: DocumentsCollectionAction, DocumentsLo
     @objc func documentsWasUpdated() {
         processDocuments()
         scrollDocIfNeeded()
+    }
+    
+    @objc func documentsModeWasSwitched(notification: Notification) {
+        guard let documentsMode = notification.userInfo?["documentsMode"] as? DocumentsMode else { return }
+        switch documentsMode {
+        case .documents:
+            break
+        case .euidWallet:
+            break
+        }
+        documentsWasUpdated()
     }
     
     @objc func secondaryDocumentsWasUpdated() {
@@ -179,8 +189,7 @@ extension DocumentsCollectionPresenter {
                 let errorType: GeneralError = (error == .noInternet) ? .noInternet : .serverError
                 GeneralErrorsHandler.process(error: errorType, in: self.view, forceClose: false)
             }
-        },
-                                changeOrderCallback: { [weak self] in
+        }, changeOrderCallback: { [weak self] in
             guard let self = self else { return }
             let module = context.documentsReorderingConfiguration.createReorderingModule()
             self.view.open(module: module)

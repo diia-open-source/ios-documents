@@ -3,11 +3,12 @@ import DiiaUIComponents
 import DiiaCommonTypes
 
 public struct DSFullDocumentModel: StatusedExpirableProtocol {
+    
     public var status: DocumentStatusCode
     public var expirationDate: Date
     public let currentDate: Date
     public let data: [DSDocumentData]
-
+    
     // MARK: - Init
     public init(status: DocumentStatusCode,
                 expirationDate: Date,
@@ -83,8 +84,9 @@ public struct DSDocumentData: Codable, Hashable {
     public let content: [DSDocumentContent]?
     public let docData: DSDocData
     public let dataForDisplayingInOrderConfigurations: DataOrderConfigurations?
+    public let dataForDisplayingAsListItem: DSListGroupItem?
     public let frontCard: DSDocumentFrontCard?
-    public let fullInfo: [DSDocumentFullInfo]?
+    public let fullInfo: [AnyCodable]?
     public let shareLocalization: LocalizationType?
     public let frontCardBackground: String?
     public let cover: Cover?
@@ -96,8 +98,9 @@ public struct DSDocumentData: Codable, Hashable {
                 content: [DSDocumentContent]? = nil,
                 docData: DSDocData,
                 dataForDisplayingInOrderConfigurations: DataOrderConfigurations? = nil,
+                dataForDisplayingAsListItem: DSListGroupItem? = nil,
                 frontCard: DSDocumentFrontCard? = nil,
-                fullInfo: [DSDocumentFullInfo]? = nil,
+                fullInfo: [AnyCodable]? = nil,
                 shareLocalization: LocalizationType? = nil,
                 frontCardBackground: String? = nil,
                 cover: Cover? = nil) {
@@ -108,6 +111,7 @@ public struct DSDocumentData: Codable, Hashable {
         self.content = content
         self.docData = docData
         self.dataForDisplayingInOrderConfigurations = dataForDisplayingInOrderConfigurations
+        self.dataForDisplayingAsListItem = dataForDisplayingAsListItem
         self.frontCard = frontCard
         self.fullInfo = fullInfo
         self.shareLocalization = shareLocalization
@@ -127,7 +131,8 @@ public struct DSDocumentData: Codable, Hashable {
         lhs.docStatus == rhs.docStatus &&
         lhs.docData == rhs.docData &&
         lhs.dataForDisplayingInOrderConfigurations == rhs.dataForDisplayingInOrderConfigurations &&
-        lhs.shareLocalization == rhs.shareLocalization
+        lhs.shareLocalization == rhs.shareLocalization &&
+        lhs.frontCard == rhs.frontCard
     }
 
     public func currentLocalization() -> LocalizationType? {
@@ -159,15 +164,13 @@ public struct DataOrderConfigurations: Codable, Equatable {
         self.label = label
         self.description = description
     }
-
-    public static func == (lhs: DataOrderConfigurations, rhs: DataOrderConfigurations) -> Bool {
-        return lhs.iconRight.code == rhs.iconRight.code &&
-        lhs.label == rhs.label &&
-        lhs.description == rhs.description
-    }
 }
 
-public struct IconCode: Codable {
+public enum BOOL: String, Codable {
+    case yes, no
+}
+
+public struct IconCode: Codable, Equatable {
     public let code: String
 
     public init(code: String) {
@@ -185,6 +188,7 @@ public extension DSDocumentData {
         self.docData = passport.docData
         self.frontCard = passport.frontCard
         self.dataForDisplayingInOrderConfigurations = passport.dataForDisplayingInOrderConfigurations
+        self.dataForDisplayingAsListItem = passport.dataForDisplayingAsListItem
         self.frontCardBackground = passport.frontCardBackground
         self.fullInfo = passport.fullInfo
         self.shareLocalization = shareLocalization
@@ -200,7 +204,7 @@ public struct DSDocData: Codable, Equatable {
     public let birthPlace: String?
     public let invalidGroup: String?
     public let validUntil: String?
-    public let isBooster: Bool?
+    public let booster: BOOL?
     public let disease: String?
     public let vaccine: String?
     public let vaccineProduct: String?
@@ -225,6 +229,7 @@ public struct DSDocData: Codable, Equatable {
     public let properUser: String?
     public let updateDate: String?
     public let fullName: String?
+    public let partnerFullName: String?
     public let licensePlate: String?
     public let vehicleLicenseId: String?
     public let serialNumber: String?
@@ -240,7 +245,13 @@ public struct DSDocData: Codable, Equatable {
     public let birthCertificateId: String?
     public let properUserUntil: String?
     public let properUserExpirationDate: String?
-
+    public let source: String?
+    public let zodiacSign: String?
+    public let tickerType: String?
+    public let tickerValue: String?
+    public let dateIssued: String?
+    public let subType: String?
+    
     public init(docName: String,
                 docType: String? = nil,
                 birthday: String? = nil,
@@ -248,7 +259,7 @@ public struct DSDocData: Codable, Equatable {
                 birthPlace: String? = nil,
                 invalidGroup: String? = nil,
                 validUntil: String? = nil,
-                isBooster: Bool? = nil,
+                booster: BOOL? = nil,
                 disease: String? = nil,
                 vaccine: String? = nil,
                 vaccineProduct: String? = nil,
@@ -273,6 +284,7 @@ public struct DSDocData: Codable, Equatable {
                 updateDate: String? = nil,
                 fullName: String? = nil,
                 fullNameEng: String? = nil,
+                partnerFullName: String? = nil,
                 licensePlate: String? = nil,
                 vehicleLicenseId: String? = nil,
                 serialNumber: String? = nil,
@@ -287,8 +299,13 @@ public struct DSDocData: Codable, Equatable {
                 birthCertificateId: String? = nil,
                 ownerType: OwnerType? = nil,
                 properUserUntil: String? = nil,
-                properUserExpirationDate: String? = nil
-
+                source: String? = nil,
+                properUserExpirationDate: String? = nil,
+                zodiacSign: String? = nil,
+                tickerType: String? = nil,
+                dateIssued: String? = nil,
+                tickerValue: String? = nil,
+                subType: String? = nil
     ) {
         self.docName = docName
         self.docType = docType
@@ -297,7 +314,7 @@ public struct DSDocData: Codable, Equatable {
         self.birthPlace = birthPlace
         self.invalidGroup = invalidGroup
         self.validUntil = validUntil
-        self.isBooster = isBooster
+        self.booster = booster
         self.disease = disease
         self.vaccine = vaccine
         self.vaccineProduct = vaccineProduct
@@ -322,6 +339,7 @@ public struct DSDocData: Codable, Equatable {
         self.updateDate = updateDate
         self.fullName = fullName
         self.fullNameEng = fullNameEng
+        self.partnerFullName = partnerFullName
         self.licensePlate = licensePlate
         self.vehicleLicenseId = vehicleLicenseId
         self.serialNumber = serialNumber
@@ -337,7 +355,12 @@ public struct DSDocData: Codable, Equatable {
         self.ownerType = ownerType
         self.properUserUntil = properUserUntil
         self.properUserExpirationDate = properUserExpirationDate
-
+        self.source = source
+        self.zodiacSign = zodiacSign
+        self.tickerType = tickerType
+        self.tickerValue = tickerValue
+        self.dateIssued = dateIssued
+        self.subType = subType
     }
 }
 
@@ -352,7 +375,7 @@ public struct DSDocumentContent: Codable {
     }
 }
 
-public struct DSDocumentFrontCard: Codable {
+public struct DSDocumentFrontCard: Codable, Equatable {
     public let UA: [DSDocumentModel]?
     public let EN: [DSDocumentModel]?
 
@@ -363,7 +386,7 @@ public struct DSDocumentFrontCard: Codable {
     }
 }
 
-public struct DSDocumentModel: Codable {
+public struct DSDocumentModel: Codable, Equatable {
     public let docHeadingOrg: DSDocumentHeading?
     public let tableBlockTwoColumnsPlaneOrg: DSTableBlockTwoColumnPlaneOrg?
     public let tableBlockPlaneOrg: DSTableBlockItemModel?
@@ -414,57 +437,6 @@ public struct DSDocumentOther: Codable {
         self.label = label
         self.value = value
         self.valueImage = valueImage
-    }
-}
-
-public struct DSDocumentFullInfo: Codable {
-    public let docHeadingOrg: DSDocumentHeading?
-    public let tickerAtm: DSTickerAtom?
-    public let tableBlockOrg: DSTableBlockItemModel?
-    public let tableBlockTwoColumnsOrg: DSTableBlockTwoColumnPlaneOrg?
-
-    public init(docHeadingOrg: DSDocumentHeading? = nil,
-                tickerAtm: DSTickerAtom? = nil,
-                tableBlockOrg: DSTableBlockItemModel? = nil,
-                tableBlockTwoColumnsOrg: DSTableBlockTwoColumnPlaneOrg? = nil) {
-        self.docHeadingOrg = docHeadingOrg
-        self.tickerAtm = tickerAtm
-        self.tableBlockOrg = tableBlockOrg
-        self.tableBlockTwoColumnsOrg = tableBlockTwoColumnsOrg
-    }
-}
-
-public struct DSDocumentHeading: Codable {
-    public let headingWithSubtitlesMlc: DSHeadingWithSubtitlesModel?
-    public let headingWithSubtitleWhiteMlc: DSHeadingWithSubtitlesModel?
-    public let docNumberCopyMlc: DSTableItemPrimaryMlc?
-    public let docNumberCopyWhiteMlc: DSTableItemPrimaryMlc?
-    public let stackMlc: DSStackMlc?
-    public let iconAtm: DSIconModel?
-
-    public init(headingWithSubtitlesMlc: DSHeadingWithSubtitlesModel? = nil,
-                headingWithSubtitleWhiteMlc: DSHeadingWithSubtitlesModel? = nil,
-                docNumberCopyMlc: DSTableItemPrimaryMlc? = nil,
-                docNumberCopyWhiteMlc: DSTableItemPrimaryMlc? = nil,
-                iconAtm: DSIconModel? = nil,
-                stackMlc: DSStackMlc? = nil) {
-        self.headingWithSubtitlesMlc = headingWithSubtitlesMlc
-        self.headingWithSubtitleWhiteMlc = headingWithSubtitleWhiteMlc
-        self.docNumberCopyMlc = docNumberCopyMlc
-        self.docNumberCopyWhiteMlc = docNumberCopyWhiteMlc
-        self.iconAtm = iconAtm
-        self.stackMlc = stackMlc
-    }
-}
-
-public struct DSStackMlc: Codable {
-    public let smallIconAtm: DSIconModel
-    public let amount: Int
-
-    public init(smallIconAtm: DSIconModel,
-                amount: Int) {
-        self.smallIconAtm = smallIconAtm
-        self.amount = amount
     }
 }
 

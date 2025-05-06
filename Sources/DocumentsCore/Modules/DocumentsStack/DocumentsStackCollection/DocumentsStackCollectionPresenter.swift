@@ -1,5 +1,4 @@
 import UIKit
-import ReactiveKit
 import DiiaDocumentsCommonTypes
 
 public typealias OnDocumentsStackCollectionAppears = (_ code: DocTypeCode) -> Void
@@ -9,7 +8,6 @@ final class DocumentsStackCollectionPresenter: DocumentsCollectionAction {
     // MARK: - Properties
     unowned var view: DocumentsCollectionView
     private unowned let holder: DocumentCollectionHolderProtocol
-    private let bag = DisposeBag()
     
     private let docType: DocumentAttributesProtocol
     private var documents: [DocumentModel] = []

@@ -1,20 +1,53 @@
 import UIKit
+import Lottie
 import DiiaUIComponents
 import DiiaCommonTypes
 
+public enum DSDocumentState {
+    case ready
+    case loading
+}
+
+public class DSDocumentWithPhotoViewModel {
+    public var model: DSDocumentData?
+    public var images: [DSDocumentContentData: UIImage]?
+    public var docType: DocumentAttributesProtocol?
+    public var errorViewModel: DocumentErrorViewModel?
+    
+    public init(
+        model: DSDocumentData? = nil,
+        images: [DSDocumentContentData : UIImage]? = nil,
+        docType: DocumentAttributesProtocol? = nil,
+        errorViewModel: DocumentErrorViewModel? = nil
+    ) {
+        self.model = model
+        self.images = images
+        self.docType = docType
+        self.errorViewModel = errorViewModel
+    }
+}
+
 public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
     
-    private var docHeadingView = DSDocumentHeadingView()
-    private var tableBlockTwoColumnsView = DSTableBlockTwoColumnsPlaneOrgView()
-    private var tableBlockPlaneView = DSTableBlockPlaneOrgView()
-    private var tickerAtm = FloatingTextLabel()
-    private var boosterView = SmallButtonPanelMlcView()
-    private var docBottomView = DSDocumentHeadingView()
-    private var subtitleLabel = BoxView(subview: UILabel().withParameters(font: FontBook.smallHeadingFont))
+    private let docHeadingView = DSDocumentHeadingView()
+    private let tableBlockTwoColumnsView = DSTableBlockTwoColumnsPlaneOrgView()
+    private let tableBlockPlaneView = DSTableBlockPlaneOrgView()
+    private let tickerAtm = DSTickerView()
+    private let boosterView = SmallButtonPanelMlcView()
+    private let docBottomView = DSDocumentHeadingView()
+    private let subtitleLabel = BoxView(subview: UILabel().withParameters(font: FontBook.smallHeadingFont))
         .withConstraints(insets: Constants.subTitleInset)
     private var verticalStack = UIStackView.create(views: [])
-    
+    private let containerView = UIView()
+    private let loadingView = BoxView(subview: LottieAnimationView(name: "loader"))
+        .withConstraints(
+            size: Constants.loaderSize,
+            centeredX: true,
+            centeredY: true
+        )
+
     private lazy var errorView = DocumentErrorView()
+    private lazy var tickerWrapperStackView = UIStackView.create(.horizontal, views: [tickerAtm])
     
     public var contextMenuCallback: Callback? {
         didSet {
@@ -24,29 +57,28 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
     
     public var tickerCallback: Callback?
     
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        tickerAtm.animate()
-    }
-    
     public override func setupSubviews() {
         translatesAutoresizingMaskIntoConstraints = false
         verticalStack.translatesAutoresizingMaskIntoConstraints = false
         tableBlockTwoColumnsView.translatesAutoresizingMaskIntoConstraints = false
+        tickerWrapperStackView.translatesAutoresizingMaskIntoConstraints = false
         tableBlockPlaneView.translatesAutoresizingMaskIntoConstraints = false
         docBottomView.translatesAutoresizingMaskIntoConstraints = false
         
-        addSubview(tableBlockTwoColumnsView)
-        addSubview(tickerAtm)
-        addSubview(docBottomView)
-        addSubview(boosterView)
+        addSubview(containerView)
+        containerView.fillSuperview()
+
+        containerView.addSubview(tableBlockTwoColumnsView)
+        containerView.addSubview(tickerWrapperStackView)
+        containerView.addSubview(docBottomView)
+        containerView.addSubview(boosterView)
 
         verticalStack = UIStackView.create(.vertical,
                                            views: [docHeadingView, subtitleLabel],
                                            spacing: 0)
 
-        addSubview(verticalStack)
-        addSubview(tableBlockPlaneView)
+        containerView.addSubview(verticalStack)
+        containerView.addSubview(tableBlockPlaneView)
 
         verticalStack.anchor(top: topAnchor,
                              leading: leadingAnchor,
@@ -72,24 +104,28 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
                                                   bottom: 0,
                                                   right: 0))
         
-        let topPlaneTableConstraint = tickerAtm.topAnchor.constraint(greaterThanOrEqualTo: tableBlockPlaneView.bottomAnchor,
-                                                                     constant: Constants.verticalTickerPadding)
+        let topPlaneTableConstraint = tickerWrapperStackView.topAnchor.constraint(
+            greaterThanOrEqualTo: tableBlockPlaneView.bottomAnchor,
+            constant: Constants.verticalTickerPadding
+        )
         topPlaneTableConstraint.priority = .defaultHigh
         topPlaneTableConstraint.isActive = true
-
-        let topTwoColumnTableConstraint = tickerAtm.topAnchor.constraint(greaterThanOrEqualTo: tableBlockTwoColumnsView.bottomAnchor,
-                                                                         constant: Constants.verticalTickerPadding)
+        
+        let topTwoColumnTableConstraint = tickerWrapperStackView.topAnchor.constraint(
+            greaterThanOrEqualTo: tableBlockTwoColumnsView.bottomAnchor,
+            constant: Constants.verticalTickerPadding
+        )
         topTwoColumnTableConstraint.priority = .defaultHigh
         topTwoColumnTableConstraint.isActive = true
 
-        tickerAtm.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
-        tickerAtm.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
-
-        docBottomView.topAnchor.constraint(greaterThanOrEqualTo: tickerAtm.bottomAnchor,
+        tickerWrapperStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+        tickerWrapperStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+     
+        docBottomView.topAnchor.constraint(greaterThanOrEqualTo: tickerWrapperStackView.bottomAnchor,
                                            constant: Constants.verticalTickerPadding).isActive = true
 
         boosterView.anchor(leading: leadingAnchor,
-                            bottom: tickerAtm.topAnchor,
+                            bottom: tickerWrapperStackView.topAnchor,
                              trailing: trailingAnchor,
                              padding: .init(top: 0,
                                             left: Constants.planePadding,
@@ -112,33 +148,37 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         tableBlockPlaneView.isHidden = true
         docBottomView.isHidden = true
         subtitleLabel.isHidden = true
+        containerView.alpha = Constants.visibleContainerViewAlpha
         setupErrorView()
+        setupLoadingView()
+        setupAccessibility()
     }
     
     /// - Parameters:
-    ///   - modelData: The model to be processed. Can be `nil` if not applicable.
+    ///   - viewModel: The viewModel to be processed. Can be `nil` if not applicable.
     ///   - shouldStopAfterErrorConfigured: A boolean flag indicating whether the configuring nested views should stop immediately if an `modelData.errorViewModel` exists and configured.
     ///   - insuranceTicker: An optional specific insuranse ticker for handling events in `FloatingTextLabel`. Defaults to `nil`.
-    public func configure(for modelData: DocumentViewModel?,
+    public func configure(for viewModel: DSDocumentWithPhotoViewModel?,
                           shouldStopAfterErrorConfigured: Bool = true,
                           insuranceTicker: DSTickerAtom? = nil) {
-
-        guard let data = modelData?.model else { return }
         
-        guard let frontCard = data.currentLocalization() == .ua ? data.frontCard?.UA : data.frontCard?.EN else { return }
+        guard let viewModel = viewModel, let data = viewModel.model else { return }
+        
+        guard let frontCard = viewModel.model?.currentLocalization() == .ua ? data.frontCard?.UA : data.frontCard?.EN else { return }
         
         if let docHeading = frontCard.first(where: {$0.docHeadingOrg != nil})?.docHeadingOrg {
             docHeadingView.configure(model: docHeading)
             docHeadingView.isHidden = false
+            containerView.accessibilityLabel = docHeading.headingWithSubtitlesMlc?.value ?? docHeading.headingWithSubtitleWhiteMlc?.value
         }
-        if let errorVM = modelData?.errorViewModel {
+        if let errorVM = viewModel.errorViewModel {
             errorView.isHidden = false
             errorView.configure(with: errorVM)
-            configureForError(for: modelData?.nameRaw.replacingOccurrences(of: " ", with: "\n"))
+            configureForError(for: viewModel.model?.docData.fullName?.replacingOccurrences(of: " ", with: "\n"))
             if shouldStopAfterErrorConfigured { return }
         }
         
-        let imagesContent = modelData?.images
+        let imagesContent = viewModel.images
         
         if let tableBlockTwoColumnsPlane = frontCard.first(where: {$0.tableBlockTwoColumnsPlaneOrg != nil})?.tableBlockTwoColumnsPlaneOrg {
             tableBlockTwoColumnsView.configure(models: tableBlockTwoColumnsPlane, imagesContent: imagesContent ?? [:])
@@ -146,10 +186,12 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         }
         if let ticker = frontCard.first(where: {$0.tickerAtm != nil})?.tickerAtm {
             configureTicker(ticker)
-        } else if let insuranceTicker = insuranceTicker {
+            tickerAtm.isHidden = false
+        } else if let insuranceTicker {
             configureTicker(insuranceTicker)
+            tickerAtm.isHidden = false
         } else {
-            tickerAtm.withHeight(0)
+            tickerAtm.isHidden = true
         }
         
         if let docButtonHeadingOrg = frontCard.first(where: {$0.docButtonHeadingOrg != nil})?.docButtonHeadingOrg {
@@ -169,7 +211,15 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
             boosterView.isHidden = false
         }
     }
+
+    public func setLoadingState(_ state: DSDocumentState) {
+        setLoading(isActive: state == .loading)
+    }
     
+    public func setErrorDescriptionTrailing(offset: CGFloat) {
+        errorView.setDescriptionTrailing(offset: offset)
+    }
+
     private func configureForError(for fullName: String?) {
         tableBlockPlaneView.configure(for: .init(tableMainHeadingMlc: nil,
                                                  tableSecondaryHeadingMlc: nil,
@@ -179,11 +229,38 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
                                                                                                    valueImage: nil))
                                                  ]))
         tableBlockPlaneView.isHidden = false
-        tickerAtm.withHeight(0)
+        tickerAtm.isHidden = true
+    }
+
+    private func setLoading(isActive: Bool) {
+        if isActive {
+            loadingView.subview.play()
+        } else {
+            loadingView.subview.stop()
+        }
+        loadingView.isHidden = !isActive
+
+        if loadingView.isHidden {
+            containerView.transform = CGAffineTransform(translationX: .zero, y: self.frame.size.height * Constants.heightMultiplier)
+            UIView.animate(
+                withDuration: Constants.animationDuration,
+                animations: {
+                    self.containerView.transform = .identity
+                    self.containerView.alpha = Constants.visibleContainerViewAlpha
+                }
+            )
+        } else {
+            containerView.alpha = .zero
+        }
     }
     
+    private func setupAccessibility() {
+        containerView.isAccessibilityElement = true
+    }
+
     fileprivate func configureTicker(_ ticker: DSTickerAtom) {
-        tickerAtm.configure(model: ticker)
+        tickerAtm.configure(with: ticker)
+        
         if ticker.action != nil {
             let insuranceTap = UITapGestureRecognizer.init(target: self, action: #selector(tickerAction(_:)))
             tickerAtm.isUserInteractionEnabled = true
@@ -192,24 +269,33 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
     }
     
     fileprivate func setupErrorView() {
-        addSubview(errorView)
+        containerView.addSubview(errorView)
         errorView.anchor(top: nil,
                          leading: leadingAnchor,
                          bottom: bottomAnchor,
                          trailing: trailingAnchor)
         errorView.isHidden = true
     }
-    
+
+    fileprivate func setupLoadingView() {
+        addSubview(loadingView)
+        loadingView.fillSuperview()
+
+        loadingView.subview.loopMode = .loop
+        loadingView.subview.backgroundBehavior = .pauseAndRestore
+        loadingView.isHidden = true
+    }
+
     public func didChangeFocus(isFocused: Bool) {
         if isFocused {
-            tickerAtm.animate()
+            tickerAtm.startAnimation()
         } else {
             tickerAtm.stopAnimation()
         }
     }
     
     public func willPresent() {
-        tickerAtm.animate()
+        tickerAtm.startAnimation()
     }
     
     public func didHide() {
@@ -243,5 +329,9 @@ extension DSDocumentWithPhotoView {
         static let verticalTickerPadding: CGFloat = 8
         static let planePadding: CGFloat = 16
         static let subTitleInset = UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16)
+        static let loaderSize = CGSize(width: 80, height: 80)
+        static let animationDuration: CGFloat = 0.3
+        static let visibleContainerViewAlpha: CGFloat = 1.0
+        static let heightMultiplier: CGFloat = 0.05
     }
 }

@@ -32,7 +32,6 @@ public struct DocumentsCollectionModuleСontext {
     let documentsLoader: DocumentsLoaderProtocol
     let docProvider: DocumentsProvider
     let documentsStackRouterCreate: (DocumentAttributesProtocol) -> RouterProtocol
-    let actionFabricAllowedCodes: [DocTypeCode]
     let documentsReorderingConfiguration: DocumentsReorderingConfiguration
     let pushNotificationsSharingSubject: PassthroughSubject<Void, Never>
     let addDocumentsActionProvider: AddDocumentsActionProviderProtocol
@@ -51,7 +50,6 @@ public struct DocumentsCollectionModuleСontext {
         self.documentsLoader = documentsLoader
         self.docProvider = docProvider
         self.documentsStackRouterCreate = documentsStackRouterCreate
-        self.actionFabricAllowedCodes = actionFabricAllowedCodes
         self.documentsReorderingConfiguration = documentsReorderingConfiguration
         self.pushNotificationsSharingSubject = pushNotificationsSharingSubject
         self.addDocumentsActionProvider = addDocumentsActionProvider

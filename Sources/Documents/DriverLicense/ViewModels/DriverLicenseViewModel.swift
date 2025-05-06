@@ -5,19 +5,22 @@ import DiiaNetwork
 import DiiaUIComponents
 import DiiaCommonTypes
 import DiiaDocumentsCommonTypes
+import DiiaDocumentsCore
 
 // MARK: - DriverLicenseViewModel
-public final class DriverLicenseViewModel: DocumentModel, DocumentViewModel {
+public final class DriverLicenseViewModel: DocumentModel {
+    
     private let context: DriverLicenseContext
     
     var docStatus: DriverLicenseStatus
-
+    
     public var model: DSDocumentData?
     public let docType: DocumentAttributesProtocol?
     public var id: String { model?.id ?? "" }
     public var orderIdentifier: String { model?.docNumber ?? "" }
     public var images = [DSDocumentContentData: UIImage]()
     public var errorViewModel: DocumentErrorViewModel?
+    
     public var documentName: String? {
         return model?.docData.name
     }
@@ -32,8 +35,15 @@ public final class DriverLicenseViewModel: DocumentModel, DocumentViewModel {
         self.model = context.model
         self.docType = context.docType
         self.docStatus = DriverLicenseStatus(fromRawValue: context.model.docStatus)
-        self.errorViewModel = context.model.currentLocalization() == .en ? docStatus.generateErrorViewModelEn(urlHandlerType: context.urlHandler) : docStatus.generateErrorViewModel(urlHandlerType: context.urlHandler)
-
+        
+        let replacementCallback = { [weak self] in
+            guard let replacementModule = self?.context.replacementModule?(), let currentView = self?.context.appRouter.currentView() else { return }
+            currentView.open(module: replacementModule)
+        }
+        self.errorViewModel = context.model.currentLocalization() == .en ?
+        docStatus.generateErrorViewModelEn(urlHandlerType: context.urlHandler, replacementCallback: replacementCallback) :
+        docStatus.generateErrorViewModel(urlHandlerType: context.urlHandler, replacementCallback: replacementCallback)
+        
         context.model.content?.forEach({ images[$0.code] = UIImage.createWithBase64String($0.image) })
         if images[.photo] == nil || context.model.content?.first(where: {$0.code == .photo})?.image.isEmpty == true {
             let photo = context.reservePhotoService.findReservePassportPhoto()
@@ -44,6 +54,11 @@ public final class DriverLicenseViewModel: DocumentModel, DocumentViewModel {
             errorViewModel = nil
             return
         }
+        
+        if docStatus == DriverLicenseStatus.deposited {
+            errorViewModel = DocumentErrorViewModel(title: R.Strings.driver_error_deposited_title.localized(),
+                                                    description: R.Strings.driver_error_deposited_description.localized())
+        }
     }
     
     public var shortDescription: String {
@@ -52,7 +67,12 @@ public final class DriverLicenseViewModel: DocumentModel, DocumentViewModel {
     
     lazy public var frontView: FrontViewProtocol = {
         let view = DSDocumentWithPhotoView()
-        view.configure(for: self)
+        let viewModel = DSDocumentWithPhotoViewModel(
+            model: self.model,
+            images: self.images,
+            docType: self.docType,
+            errorViewModel: self.errorViewModel)
+        view.configure(for: viewModel)
         return view
     }()
     
@@ -132,10 +152,9 @@ public final class DriverLicenseViewModel: DocumentModel, DocumentViewModel {
             [
                 Action(title: R.Strings.action_title_full_info.localized(),
                        image: R.Image.ds_docInfo.image,
-                       callback: { [weak view, weak self] in
-                           guard let self else { return }
-                           let passportDetails = DSDocumentDetailsModule(with: self)
-                           view?.showChild(module: passportDetails)
+                       callback: { [weak self, weak view] in
+                           guard let self = self, let view = view else { return }
+                           self.openDocumentDetails(in: view)
                        }),
                 Action(title: model?.shareLocalization == .en ? R.Strings.general_translate_ukrainian.localized() : R.Strings.general_translate_english.localized(),
                        image: model?.shareLocalization == .ua ? R.Image.translate_english.image : R.Image.translate_ukrainian.image,
@@ -167,12 +186,30 @@ public final class DriverLicenseViewModel: DocumentModel, DocumentViewModel {
                                                                             expirationDate: driverLicense.expirationDate,
                                                                             currentDate: driverLicense.currentDate,
                                                                             data: driverLicense.data.map {
-                                                                                if $0.id == self.id {
-                                                                                    return .init(passport: $0, shareLocalization: newLocalization)
-                                                                                } else {
-                                                                                    return $0
-                                                                                }
-                                                                            }))
+            if $0.id == self.id {
+                return .init(passport: $0, shareLocalization: newLocalization)
+            } else {
+                return $0
+            }
+        }))
         NotificationCenter.default.post(name: DocumentsConstants.Notifications.documentsWasReordered, object: nil)
+    }
+    
+    private func openDocumentDetails(in view: BaseView) {
+        guard let docData = self.model else { return }
+        let localisation = model?.currentLocalization()?.rawValue
+        
+        let viewModel = DocumentDetailsCommonViewModel(
+            model: docData,
+            images: images,
+            eventHandler: DocumentDetailsEventHandler(
+                verificationRequest: errorViewModel != nil ? nil : { [weak self] in
+                    guard let self = self else { return .failed(.noData) }
+                    return self.context.sharingApiClient.shareDocument(docType: docType?.docCode ?? .empty,
+                                                                       documentId: docData.id,
+                                                                       localization: localisation)
+                },
+                localisation: model?.currentLocalization() ?? .ua))
+        view.showChild(module: DocumentDetailsCommonModule(with: viewModel))
     }
 }

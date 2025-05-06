@@ -4,7 +4,7 @@ import DiiaUIComponents
 
 public extension DriverLicenseStatus {
 
-    func generateErrorViewModel(urlHandlerType: URLOpenerProtocol) -> DocumentErrorViewModel? {
+    func generateErrorViewModel(urlHandlerType: URLOpenerProtocol, replacementCallback: @escaping Callback) -> DocumentErrorViewModel? {
         switch self {
         case .noPhoto:
             return DocumentErrorViewModel(
@@ -33,12 +33,19 @@ public extension DriverLicenseStatus {
                                callback: {
                                    _ = urlHandlerType.url(urlString: PackageConstants.URLs.mvsDriverQueueUrl, linkType: nil)
             }))
+        case .destroyed:
+            return DocumentErrorViewModel(
+                title: R.Strings.driver_error_destroyed.localized(),
+                description: R.Strings.driver_error_destroyed_description.localized(),
+                action: Action(title: R.Strings.driver_error_destroyed_action.localized(),
+                               iconName: nil,
+                               callback: replacementCallback))
         default:
             return nil
         }
     }
 
-    func generateErrorViewModelEn(urlHandlerType: URLOpenerProtocol) -> DocumentErrorViewModel? {
+    func generateErrorViewModelEn(urlHandlerType: URLOpenerProtocol, replacementCallback: @escaping Callback) -> DocumentErrorViewModel? {
         switch self {
         case .noPhoto:
             return DocumentErrorViewModel(
@@ -67,6 +74,13 @@ public extension DriverLicenseStatus {
                                callback: {
                                    _ = urlHandlerType.url(urlString: PackageConstants.URLs.mvsDriverQueueUrl, linkType: nil)
             }))
+        case .destroyed:
+            return DocumentErrorViewModel(
+                title: R.Strings.driver_error_destroyed.localized(),
+                description: R.Strings.driver_error_destroyed_description.localized(),
+                action: Action(title: R.Strings.driver_error_destroyed_action.localized(),
+                               iconName: nil,
+                               callback: replacementCallback))
         default:
             return nil
         }

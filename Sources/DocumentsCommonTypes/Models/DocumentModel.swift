@@ -12,7 +12,7 @@ public protocol DocumentModel: AnyObject {
     var docType: DocumentAttributesProtocol? { get }
     var shortDescription: String { get }
     var orderConfigurations: DataOrderConfigurations? { get }
-    
+    var isDocumentValid: Bool { get }
     var frontView: FrontViewProtocol { get }
     func backView(for type: VerificationType?, flippingAction: @escaping Callback) -> FlippableEmbeddedView?
     
@@ -25,25 +25,20 @@ public protocol DocumentModel: AnyObject {
 public extension DocumentModel {
     var documentName: String? { return model?.docData.docName }
     var orderConfigurations: DataOrderConfigurations? { return nil }
+    var isDocumentValid: Bool { return true }
 
     func updateIfNeeded() {}
 }
 
-public protocol DocumentViewModel {
-    var model: DSDocumentData? { get }
-    var images: [DSDocumentContentData: UIImage] { get }
-    var docType: DocumentAttributesProtocol? { get }
-    var codeViewModel: QRCodeViewModel? { get }
-    var errorViewModel: DocumentErrorViewModel? { get set }
-}
-
-public extension DocumentViewModel {
-    var errorViewModel: DocumentErrorViewModel? { return nil }
-    var nameRaw: String { return model?.docData.fullName ?? "" }
-}
-
 public protocol FrontViewProtocol: FlippableEmbeddedView, VerifyDocumentViewProtocol {
     var contextMenuCallback: Callback? { get set }
+    func setLoadingState(_ state: DSDocumentState)
+    func setErrorDescriptionTrailing(offset: CGFloat)
+}
+
+public extension FrontViewProtocol {
+    func setLoadingState(_ state: DSDocumentState) {}
+    func setErrorDescriptionTrailing(offset: CGFloat) {}
 }
 
 // MARK: - Protocols

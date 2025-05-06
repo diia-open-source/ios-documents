@@ -56,3 +56,11 @@ type_body_length:
 nesting:
   type_level:
     warning: 2
+    
+# This is an entirely separate list of rules that are only run by the analyze command.
+analyzer_rules:
+  - unused_import
+  - unused_declaration
+  
+unused_declaration:
+  severity: warning

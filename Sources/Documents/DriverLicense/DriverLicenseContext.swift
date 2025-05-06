@@ -8,6 +8,7 @@ public struct DriverLicenseContext {
     let sharingApiClient: SharingDocsApiClientProtocol
     let ratingOpener: RateServiceProtocol
     let faqOpener: FaqOpenerProtocol
+    let appRouter: AppRouterProtocol
     let replacementModule: CreateModuleCallback?
     let docReorderingModule: CreateModuleCallback
     let docStackReorderingModule: CreateModuleCallback
@@ -20,6 +21,7 @@ public struct DriverLicenseContext {
                 sharingApiClient: SharingDocsApiClientProtocol,
                 ratingOpener: RateServiceProtocol,
                 faqOpener: FaqOpenerProtocol,
+                appRouter: AppRouterProtocol,
                 replacementModule: CreateModuleCallback?,
                 docReorderingModule: @escaping CreateModuleCallback,
                 docStackReorderingModule: @escaping CreateModuleCallback,
@@ -31,6 +33,7 @@ public struct DriverLicenseContext {
         self.sharingApiClient = sharingApiClient
         self.ratingOpener = ratingOpener
         self.faqOpener = faqOpener
+        self.appRouter = appRouter
         self.replacementModule = replacementModule
         self.docReorderingModule = docReorderingModule
         self.docStackReorderingModule = docStackReorderingModule

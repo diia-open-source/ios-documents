@@ -28,7 +28,6 @@ final class DocumentsCollectionContextImpl: DocumentsCollectionContext {
     lazy var documentsLoader: DocumentsLoaderProtocol = context.documentsLoader
     lazy var docProvider: DocumentsProvider = context.docProvider
     lazy var documentsStackRouterCreate: (DocumentAttributesProtocol) -> RouterProtocol = context.documentsStackRouterCreate
-    lazy var actionFabricAllowedCodes: [DocTypeCode] = context.actionFabricAllowedCodes
     lazy var documentsReorderingConfiguration: DocumentsReorderingConfiguration = context.documentsReorderingConfiguration
     lazy var pushNotificationsSharingSubject: PassthroughSubject<Void, Never> = context.pushNotificationsSharingSubject
     lazy var addDocumentsService: AddDocumentsServiceProtocol = AddDocumentsService(addDocumentsActionProvider: context.addDocumentsActionProvider,

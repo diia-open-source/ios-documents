@@ -39,7 +39,6 @@ final class DocumentsCollectionViewController: UIViewController, Storyboarded {
             scrollingPageControl.maxDots = Constants.maxDots(for: pagingData.total)
             scrollingPageControl.centerDots = Constants.centerDots(for: pagingData.total)
             scrollingPageControl.dotSize = Constants.dotSize
-            updatePageControlAccessibility()
         }
     }
     
@@ -115,6 +114,9 @@ final class DocumentsCollectionViewController: UIViewController, Storyboarded {
                 return
             }
             cell?.setContentHidden(isHidden: !isVisible, animated: animated)
+            if isVisible {
+                UIAccessibility.post(notification: .layoutChanged, argument: cell)
+            }
         }
     }
     
@@ -166,16 +168,9 @@ final class DocumentsCollectionViewController: UIViewController, Storyboarded {
     }
     
     private func setupAccessibility() {
-        [scrollingPageControl, statusTextView].forEach {
-            $0?.isAccessibilityElement = true
-        }
+        statusTextView.isAccessibilityElement = true
         statusTextView.accessibilityLabel = R.Strings.documents_collection_accessibility_reachability_error.localized()
-        scrollingPageControl.accessibilityTraits = .adjustable
-    }
-    
-    private func updatePageControlAccessibility() {
-        scrollingPageControl.accessibilityLabel = R.Strings.documents_collection_accessibility_page_control.formattedLocalized(arguments: "\(pagingData.current + 1)", "\(pagingData.total)")
-        scrollingPageControl.accessibilityHint = R.Strings.documents_collection_accessibility_page_control_hint.localized()
+        scrollingPageControl.isAccessibilityElement = false
     }
 }
 
@@ -250,7 +245,7 @@ extension DocumentsCollectionViewController: DocumentsCollectionView {
     }
     
     func isVisible() -> Bool {
-        return view.window != nil
+        return view.window != nil && !view.needsUpdateConstraints()
     }
 }
 

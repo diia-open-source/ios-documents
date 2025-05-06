@@ -86,18 +86,11 @@ public class QRCodeBarcodeView: BaseCodeView, FlippableEmbeddedView {
         errorView.removeFromSuperview()
         let stub = StubMessageViewV2()
         stub.translatesAutoresizingMaskIntoConstraints = false
-        stub.configure(with: .init(icon: emoji, title: title, repeatAction: {[weak self] in
+        stub.configure(with: .init(icon: emoji, title: title, btnTitle: btnText, repeatAction: {[weak self] in
             self?.viewModel?.loadCode()
         }), titleFont: Constants.errorTextFont,
                        emojiFont: FontBook.bigEmoji,
                        buttonFont: Constants.errorTextFont)
-        if btnText != nil {
-            stub.configure(btnTitle: btnText ?? "",
-                           titleFont: Constants.errorTextFont,
-                           emojiFont: FontBook.bigEmoji,
-                           buttonFont: Constants.errorTextFont)
-        }
-        
         let showView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.light),
                                                        intensity: 0.1)
         showView.translatesAutoresizingMaskIntoConstraints = false
@@ -107,13 +100,18 @@ public class QRCodeBarcodeView: BaseCodeView, FlippableEmbeddedView {
         showView.layer.cornerRadius = Constants.cornerRadius
         addSubview(showView)
         
-        if type == .global {
+        switch type {
+        case .global:
             showView.fillSuperview()
-        } else {
-            showView.topAnchor.constraint(equalTo: verificationView.expirationLabel.bottomAnchor).isActive = true
-            showView.bottomAnchor.constraint(equalTo: verificationView.optionsStack.topAnchor).isActive = true
-            showView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-            showView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        case .qrExpiration:
+            if verificationView.optionsStack.isHidden {
+                showView.fillSuperview()
+            } else {
+                showView.topAnchor.constraint(equalTo: verificationView.expirationLabel.bottomAnchor).isActive = true
+                showView.bottomAnchor.constraint(equalTo: verificationView.optionsStack.topAnchor).isActive = true
+                showView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+                showView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+            }
         }
         stub.centerYAnchor.constraint(equalTo: showView.centerYAnchor).isActive = true
         stub.leadingAnchor.constraint(equalTo: showView.leadingAnchor, constant: Constants.stubOffset).isActive = true

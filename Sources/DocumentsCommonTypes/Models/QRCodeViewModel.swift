@@ -47,8 +47,8 @@ public class QRCodeViewModel {
         self.localization = localization
         self.flippingAction = flippingAction
         
-        loadingWorkItem = DispatchWorkItem { [weak self] in
-            guard let self = self else { return }
+        loadingWorkItem = DispatchWorkItem { [weak self, weak document] in
+            guard let self = self, let document = document else { return }
             
             self.isCancelled = false
             self.holder?.statusChanged(status: .loading)
