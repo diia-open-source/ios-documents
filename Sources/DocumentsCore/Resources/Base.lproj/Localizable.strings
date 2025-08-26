@@ -7,8 +7,13 @@
 
 // MARK: - Accessibility
 "documents_collection_accessibility_reachability_error" = "Немає доступу до інтернету. Дані не оновлюються.";
+"document_general_magic_tap_hint" = "Торкніться двома пальцями двічі, щоб переглянути вміст документа";
+"document_open_in_stack_accessibility" = "Відкрити вкладені документи";
+"add_documents_accessibility_title" = "Додати документ/змінити порядок документів";
+"add_documents_accessibility_hint" = "Торкніться двома пальцями двічі, щоб обрати";
 
 // MARK: - General
 "general_accessibility_close" = "Закрити";
+"general_accessibility_back" = "Назад";
 "document_general_retry" = "Спробувати ще раз";
 "document_general_retry_en" = "Try again";

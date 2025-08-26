@@ -1,3 +1,4 @@
+
 import UIKit
 import Lottie
 import DiiaCommonTypes
@@ -73,6 +74,10 @@ public class QRCodeBarcodeView: BaseCodeView, FlippableEmbeddedView {
         setLoading(isActive: false)
     }
     
+    public func changeVerificationView(for verificationType: VerificationType) {
+        verificationView.changeVerificationView(for: verificationType)
+    }
+    
     // MARK: - Helping methods
     private func clearViews() {
         titleLabel.isHidden = true
@@ -141,9 +146,10 @@ public class QRCodeBarcodeView: BaseCodeView, FlippableEmbeddedView {
             verificationView.accessibilityLabel = R.Strings.documents_collection_accessibility_verification_view_offline.formattedLocalized(arguments: viewModel.docType?.name ?? "")
             verificationView.accessibilityHint = nil
             verificationView.configureAccessibility(on: self, isMainStackAvailable: false)
-        case .ready:
-            verificationView.accessibilityLabel = R.Strings.documents_collection_accessibility_verification_view.formattedLocalized(arguments: viewModel.docType?.name ?? "")
-            verificationView.accessibilityHint = R.Strings.documents_collection_accessibility_verification_view_hint.localized()
+        case .ready(_, let barcodeLink):
+            self.isAccessibilityElement = true
+            self.accessibilityLabel = barcodeLink != nil ? R.Strings.document_general_qr_session_time.localized() : R.Strings.document_general_qr_code_header.localized()
+            self.accessibilityTraits = .staticText
         default:
             break
         }

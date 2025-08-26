@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaMVPModule
@@ -19,6 +20,7 @@ public protocol DocumentModel: AnyObject {
     func sharingRequest() -> Signal<ShareLinkModel, NetworkError>?
     func getCardActions(view: BaseView, flipper: FlipperVerifyProtocol) -> [[Action]]
     func getInstackCardActions(view: BaseView, flipper: FlipperVerifyProtocol) -> [[Action]]
+    func getAccessibilityMenuAction(view: BaseView, flipper: FlipperVerifyProtocol, inStack: Bool) -> [[Action]]
     func updateIfNeeded()
 }
 
@@ -51,6 +53,7 @@ public protocol FlippableEmbeddedView: UIView {
     func willHide()
     func didHide()
     func didChangeFocus(isFocused: Bool)
+    func changeVerificationView(for verificationType: VerificationType)
 }
 
 extension FlippableEmbeddedView {
@@ -58,6 +61,7 @@ extension FlippableEmbeddedView {
     public func willHide() {}
     public func didHide() {}
     public func didChangeFocus(isFocused: Bool) {}
+    public func changeVerificationView(for verificationType: VerificationType) {}
 }
 
 // it is required for verification feature, that is not moved into DocumentCore, but VerifyDocumentViewProtocol is used in DocumentModel

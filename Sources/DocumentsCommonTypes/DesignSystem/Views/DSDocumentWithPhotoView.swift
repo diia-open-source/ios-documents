@@ -1,3 +1,4 @@
+
 import UIKit
 import Lottie
 import DiiaUIComponents
@@ -169,7 +170,7 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         if let docHeading = frontCard.first(where: {$0.docHeadingOrg != nil})?.docHeadingOrg {
             docHeadingView.configure(model: docHeading)
             docHeadingView.isHidden = false
-            containerView.accessibilityLabel = docHeading.headingWithSubtitlesMlc?.value ?? docHeading.headingWithSubtitleWhiteMlc?.value
+            accessibilityLabel = docHeading.headingWithSubtitlesMlc?.value ?? docHeading.headingWithSubtitleWhiteMlc?.value
         }
         if let errorVM = viewModel.errorViewModel {
             errorView.isHidden = false
@@ -256,6 +257,7 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
     
     private func setupAccessibility() {
         containerView.isAccessibilityElement = true
+        containerView.accessibilityTraits = .staticText
     }
 
     fileprivate func configureTicker(_ ticker: DSTickerAtom) {

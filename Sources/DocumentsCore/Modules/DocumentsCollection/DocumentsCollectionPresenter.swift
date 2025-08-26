@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaCommonTypes
@@ -191,7 +192,7 @@ extension DocumentsCollectionPresenter {
             }
         }, changeOrderCallback: { [weak self] in
             guard let self = self else { return }
-            let module = context.documentsReorderingConfiguration.createReorderingModule()
+            let module = self.context.documentsReorderingConfiguration.createReorderingModule()
             self.view.open(module: module)
         })
     }

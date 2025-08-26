@@ -1,3 +1,4 @@
+
 import Foundation
 import DiiaUIComponents
 import DiiaCommonTypes
@@ -251,6 +252,7 @@ public struct DSDocData: Codable, Equatable {
     public let tickerValue: String?
     public let dateIssued: String?
     public let subType: String?
+    public let type: String?
     
     public init(docName: String,
                 docType: String? = nil,
@@ -305,7 +307,8 @@ public struct DSDocData: Codable, Equatable {
                 tickerType: String? = nil,
                 dateIssued: String? = nil,
                 tickerValue: String? = nil,
-                subType: String? = nil
+                subType: String? = nil,
+                type: String? = nil
     ) {
         self.docName = docName
         self.docType = docType
@@ -361,6 +364,7 @@ public struct DSDocData: Codable, Equatable {
         self.tickerValue = tickerValue
         self.dateIssued = dateIssued
         self.subType = subType
+        self.type = type
     }
 }
 

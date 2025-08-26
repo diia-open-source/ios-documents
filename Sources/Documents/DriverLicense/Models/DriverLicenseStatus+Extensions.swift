@@ -1,3 +1,4 @@
+
 import Foundation
 import DiiaCommonTypes
 import DiiaUIComponents
@@ -40,6 +41,10 @@ public extension DriverLicenseStatus {
                 action: Action(title: R.Strings.driver_error_destroyed_action.localized(),
                                iconName: nil,
                                callback: replacementCallback))
+        case .deposited:
+            return DocumentErrorViewModel(
+                title: R.Strings.driver_error_transferred_to_storage_title.localized(),
+                description: R.Strings.driver_error_transferred_to_storage_description.localized())
         default:
             return nil
         }

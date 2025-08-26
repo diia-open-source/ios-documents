@@ -29,3 +29,4 @@
 "documents_collection_accessibility_verification_view_hint" = "Натисніть, щоб відкрити інформацію про документ.";
 "document_general_error_codes_not_loaded" = "Коди для перевірки\nне завантажено";
 "document_general_error_codes_not_loaded_en" = "Verification codes failed\nto upload";
+"document_general_qr_code_header" = "QR-КОД";

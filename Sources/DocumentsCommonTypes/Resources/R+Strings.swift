@@ -1,3 +1,4 @@
+
 import Foundation
 
 internal extension R {
@@ -11,6 +12,7 @@ internal extension R {
         case document_general_qr_code_en
         case document_general_barcode_en
         case document_general_qr_session_time
+        case document_general_qr_code_header
         case document_general_retry
         case document_general_retry_en
         case document_general_session_time

@@ -35,6 +35,8 @@
 "driver_error_old_format_descr_en" = "Register in the electronic queue to update document. It will appear in the application afterward.";
 "driver_error_action_en" = "Electronic queue";
 "driver_error_to_driver_action_en" = "Open Driver‘s Account";
+"driver_error_transferred_to_storage_title" = "Передано на зберігання😔";
+"driver_error_transferred_to_storage_description" = "Посвідчення водія буде зберігатися в сервісному центрі МВС протягом року. Після цього його знищать.";
 
 // MARK: - Action Titles
 "action_title_full_info" = "Повна інформація";

@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaMVPModule
@@ -145,6 +146,14 @@ public final class DriverLicenseViewModel: DocumentModel {
                 })
         ])
         return actions
+    }
+    
+    public func getAccessibilityMenuAction(view: BaseView, flipper: FlipperVerifyProtocol, inStack: Bool) -> [[Action]] {
+        if inStack {
+            return getInstackCardActions(view: view, flipper: flipper)
+        } else {
+            return getCardActions(view: view, flipper: flipper)
+        }
     }
     
     private func commonActions(view: BaseView) -> [[Action]] {

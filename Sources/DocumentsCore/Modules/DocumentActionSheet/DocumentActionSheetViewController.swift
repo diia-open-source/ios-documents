@@ -1,3 +1,4 @@
+
 import UIKit
 import DiiaUIComponents
 import DiiaCommonTypes
@@ -225,7 +226,12 @@ class DocumentActionSheetViewController: UIViewController, ChildSubcontroller {
     }
     
     private func configureAccessibility() {
-        UIAccessibility.post(notification: .layoutChanged, argument: actionStackView.subviews.first)
+        guard let firstButton = actionStackView.subviews.first(where: { $0 is ActionButton }) else {
+            UIAccessibility.post(notification: .screenChanged, argument: self.view)
+            return
+        }
+        
+        UIAccessibility.post(notification: .screenChanged, argument: firstButton)
     }
     
     // MARK: - Actions

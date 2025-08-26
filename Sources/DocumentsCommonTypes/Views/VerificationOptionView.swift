@@ -1,3 +1,4 @@
+
 import UIKit
 import DiiaUIComponents
 import DiiaCommonTypes
@@ -30,6 +31,7 @@ public final class VerificationOptionView: BaseCodeView {
         setupConstraints()
         setupRecognizer()
         setupUI()
+        setupAccessibility()
     }
     
     private func setupUI() {
@@ -65,13 +67,21 @@ public final class VerificationOptionView: BaseCodeView {
         onTap?()
     }
     
+    // MARK: - Accessibility
+    private func setupAccessibility() {
+        isAccessibilityElement = true
+        accessibilityTraits = .button
+    }
+    
     // MARK: - Public Methods
     public func setActive(_ isActive: Bool, localization: LocalizationType) {
         switch verificationType {
         case .barcode:
             titleLabel.text = localization == .ua ? R.Strings.general_barcode.localized() : R.Strings.document_general_barcode_en.localized()
+            accessibilityLabel = localization == .ua ? R.Strings.general_barcode.localized() : R.Strings.document_general_barcode_en.localized()
         case .qr:
             titleLabel.text = localization == .ua ? R.Strings.general_qr_code.localized() : R.Strings.document_general_qr_code_en.localized()
+            accessibilityLabel = localization == .ua ? R.Strings.general_qr_code.localized() : R.Strings.document_general_qr_code_en.localized()
         }
         
         let iconActive = verificationType == .qr ? R.Image.qrCodeActive.image : R.Image.barcodeActive.image

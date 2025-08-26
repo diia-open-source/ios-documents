@@ -1,3 +1,4 @@
+
 import Foundation
 import DiiaMVPModule
 import DiiaCommonTypes
@@ -34,6 +35,35 @@ struct DocumentStackActionsFabric: DocumentActionsFabricProtocol {
             view?.showChild(module: DocumentActionSheetModule(actions: actions,
                                                               codeAction: self.getCodeAction(docType: dataTypeValue?.docType?.docCode,
                                                                                              flipper: flipper)))
+        }
+    }
+    
+    func getAccessibilityMenuActions(
+        for dataType: MultiDataType<DocumentModel>,
+        view: BaseView,
+        flipper: FlipperVerifyProtocol,
+        openStackDocument: Callback?
+    ) -> Callback? {
+        let actions: [[Action]]
+        
+        switch dataType {
+        case .single(let document):
+            actions = document.getAccessibilityMenuAction(view: view, flipper: flipper, inStack: true)
+        case .multiple:
+            guard let openStackDocument else { return nil }
+            actions = [[Action(title: R.Strings.document_open_in_stack_accessibility.localized(), image: nil, callback: openStackDocument)]]
+        }
+        
+        if actions.isEmpty {
+            return nil
+        }
+        let dataTypeValue = dataType.getValue()
+        return { [weak view, weak dataTypeValue, weak flipper] in
+            guard let flipper = flipper else { return }
+            view?.showChild(module: DocumentActionSheetModule(actions: actions,
+                                                              codeAction: self.getCodeAction(docType: dataTypeValue?.docType?.docCode,
+                                                                                             flipper: flipper)))
+
         }
     }
     

@@ -1,4 +1,5 @@
-import UIKit
+
+import Foundation
 
 /// the string value of DocType (must be declared on the app level)
 public typealias DocTypeCode = String

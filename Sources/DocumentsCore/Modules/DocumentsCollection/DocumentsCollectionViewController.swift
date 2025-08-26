@@ -1,6 +1,8 @@
+
 import UIKit
 import DiiaMVPModule
 import DiiaUIComponents
+import DiiaCommonTypes
 
 protocol DocumentsCollectionView: BaseView {
     func updateDocuments()
@@ -78,6 +80,10 @@ final class DocumentsCollectionViewController: UIViewController, Storyboarded {
         } else {
             needLateUpdatesUI = true
         }
+        
+        if let visibleIndexPath, let cell = collectionView.cellForItem(at: visibleIndexPath), !needUpdatesUI {
+            UIAccessibility.post(notification: .layoutChanged, argument: cell)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -109,14 +115,16 @@ final class DocumentsCollectionViewController: UIViewController, Storyboarded {
             guard let self else { return }
             let isVisible = indexPath == self.visibleIndexPath || self.visibleIndexPath == nil
             let cell = self.collectionView.cellForItem(at: indexPath) as? DocumentCollectionCell
+            
+            if isVisible {
+                UIAccessibility.post(notification: .layoutChanged, argument: cell)
+            }
+            
             guard (self.pagingData.total - 1) != indexPath.row || !self.presenter.haveAdditionalCard else {
                 cell?.setContentHidden(isHidden: false, animated: false)
                 return
             }
             cell?.setContentHidden(isHidden: !isVisible, animated: animated)
-            if isVisible {
-                UIAccessibility.post(notification: .layoutChanged, argument: cell)
-            }
         }
     }
     
@@ -275,7 +283,9 @@ extension DocumentsCollectionViewController: UICollectionViewDataSource {
             contextMenuCallback: moreAction,
             cardStackCallback: { [weak self] in
                 self?.presenter.stackClicked(at: indexPath.item)
-            })
+            },
+            accessibilityActionsMenuCallBack: makeAccessibilityMenuCallBack(for: indexPath, cell: cell)
+        )
         
         cell.configure(with: viewModel)
         
@@ -285,6 +295,31 @@ extension DocumentsCollectionViewController: UICollectionViewDataSource {
         
         let cellIsHidden = !(indexPath == visibleIndexPath || visibleIndexPath == nil)
         cell.setContentHidden(isHidden: cellIsHidden, animated: false)
+    }
+    
+    private func makeAccessibilityMenuCallBack(for indexPath: IndexPath, cell: DocumentCollectionCell) -> Callback? {
+        let callback: Callback?
+        
+        guard let dataType = presenter.itemAtIndex(index: indexPath.item) else { return nil }
+        
+        if dataType.count > 1 {
+            callback = { [weak self] in
+                guard let self else { return }
+
+                if let indexPath = self.collectionView.indexPath(for: cell) {
+                    presenter.stackClicked(at: indexPath.item)
+                }
+            }
+        } else {
+            callback = nil
+        }
+        
+        return self.actionFabric?.getAccessibilityMenuActions(
+            for: dataType,
+            view: self,
+            flipper: cell,
+            openStackDocument: callback
+        )
     }
 }
 

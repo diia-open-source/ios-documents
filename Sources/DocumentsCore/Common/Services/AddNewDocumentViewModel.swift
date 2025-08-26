@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaCommonTypes
@@ -49,5 +50,17 @@ class AddNewDocumentViewModel: DocumentModel {
     
     func getInstackCardActions(view: BaseView, flipper: FlipperVerifyProtocol) -> [[Action]] {
         return []
+    }
+    
+    func getAccessibilityMenuAction(view: BaseView, flipper: FlipperVerifyProtocol, inStack: Bool) -> [[DiiaCommonTypes.Action]] {
+        let actions =
+        [
+            [
+                Action(title: R.Strings.document_general_add_document.localized(), image: nil, callback: addDocumentCallback),
+                Action(title: R.Strings.document_general_change_documents_order.localized(), image: nil, callback: changeOrderCallback)
+            ]
+        ]
+        
+        return actions
     }
 }

@@ -1,3 +1,4 @@
+
 import UIKit
 import Lottie
 import DiiaMVPModule
@@ -12,10 +13,11 @@ protocol DocumentsStackView: BaseView {
 final class DocumentsStackViewController: UIViewController, Storyboarded {
 
     // MARK: - Outlets
+    @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var childContainerView: UIView!
-    @IBOutlet weak private var backgroundColorView: UIView!
-    @IBOutlet weak private var backgroundAnimationView: LottieAnimationView!
+    @IBOutlet private weak var backgroundColorView: UIView!
+    @IBOutlet private weak var backgroundAnimationView: LottieAnimationView!
 
     @IBOutlet weak private var topConstraint: NSLayoutConstraint!
     
@@ -30,6 +32,7 @@ final class DocumentsStackViewController: UIViewController, Storyboarded {
         
         setupViews()
         setupAnimation()
+        setupAccessibility()
         presenter.configureView()
     }
     
@@ -55,6 +58,13 @@ final class DocumentsStackViewController: UIViewController, Storyboarded {
         backgroundAnimationView.backgroundBehavior = .pauseAndRestore
         backgroundAnimationView.contentMode = .scaleAspectFill
         backgroundAnimationView.play()
+    }
+    
+    // MARK: - Accessibility
+    private func setupAccessibility() {
+        backButton.isAccessibilityElement = true
+        backButton.accessibilityTraits = .button
+        backButton.accessibilityLabel = R.Strings.general_accessibility_back.localized()
     }
 }
 

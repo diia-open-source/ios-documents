@@ -1,3 +1,4 @@
+
 import UIKit
 import DiiaCommonTypes
 import DiiaUIComponents
@@ -125,6 +126,10 @@ final class VerificationView: BaseCodeView {
         mainStackView.isAccessibilityElement = isMainStackAvailable
     }
     
+    func changeVerificationView(for verificationType: VerificationType) {
+        onVerificationTypeSelected(verificationType)
+    }
+    
     // MARK: - Private Methods
     private func onVerificationTypeSelected(_ verificationType: VerificationType) {
         guard let docType = self.docType else { return }
@@ -155,7 +160,8 @@ final class VerificationView: BaseCodeView {
     }
     
     private func setupAccessibility() {
-        mainStackView.accessibilityLabel = R.Strings.documents_collection_accessibility_verification_view_content.localized()
+        mainStackView.accessibilityLabel = R.Strings.document_general_qr_session_time.localized()
+        mainStackView.accessibilityTraits = .staticText
     }
     
     private func separateBarcode(code: String) -> String {

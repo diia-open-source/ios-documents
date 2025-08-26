@@ -50,7 +50,7 @@ extension DocumentDetailsCommonViewController: DocumentDetailsCommonView {
         
         if let ticker = insuranceTicker {
             let tickerAnyCodable = AnyCodable.dictionary([
-                DSTickerAtmBuilder.modelKey: AnyCodable.fromEncodable(encodable: ticker)
+                Constants.tickerAtmKey: AnyCodable.fromEncodable(encodable: ticker)
             ])
             fullInfo.insert(tickerAnyCodable, at: 1)
         }
@@ -70,11 +70,11 @@ extension DocumentDetailsCommonViewController: DocumentDetailsCommonView {
     
     private func setupFabric(images: [DSDocumentContentData: UIImage]) {
         let twoColumnBuilder = DSTableBlockTwoColumnsOrgBuilder(imagesContent: images)
-        viewFabric.setBuilder(twoColumnBuilder, forKey: DSTableBlockTwoColumnsOrgBuilder.modelKey)
+        viewFabric.setBuilder(twoColumnBuilder)
         let tickerBuilder = DSTickerAtmBuilder(padding: Constants.tickerAtmPadding)
-        viewFabric.setBuilder(tickerBuilder, forKey: DSTickerAtmBuilder.modelKey)
+        viewFabric.setBuilder(tickerBuilder)
         let chipGroupBuilder = DSChipsBlackOrgBuilder(isActive: false)
-        viewFabric.setBuilder(chipGroupBuilder, forKey: DSChipsBlackOrgBuilder.modelKey)
+        viewFabric.setBuilder(chipGroupBuilder)
     }
 }
 
@@ -82,5 +82,6 @@ extension DocumentDetailsCommonViewController {
     enum Constants {
         static let backgroundColor: UIColor = UIColor("#f1f6f6")
         static let tickerAtmPadding = UIEdgeInsets(top: 24, left: .zero, bottom: .zero, right: .zero)
+        static let tickerAtmKey = "tickerAtm"
     }
 }

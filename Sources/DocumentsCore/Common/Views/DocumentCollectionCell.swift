@@ -1,3 +1,4 @@
+
 import UIKit
 import DiiaCommonTypes
 import DiiaUIComponents
@@ -10,6 +11,7 @@ struct DocumentCollectionCellViewModel {
     let documentData: MultiDataType<DocumentModel>
     let contextMenuCallback: Callback?
     let cardStackCallback: Callback?
+    let accessibilityActionsMenuCallBack: Callback?
 }
 
 // MARK: - Cell
@@ -127,8 +129,6 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
             blur: Constants.shadowBlur)
         
         backflipContainer.isHidden = true
-        
-        setupAccessibility()
     }
     
     override func prepareForReuse() {
@@ -163,6 +163,17 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
         self.viewModel = viewModel
         configureFront(with: viewModel.documentData.getValue())
         
+        let data = viewModel.documentData.getValue()
+        let frontCard = data.model?.currentLocalization() == .ua ? data.model?.frontCard?.UA : data.model?.frontCard?.EN
+        let docHeading = frontCard?.first(where: {$0.docHeadingOrg != nil})?.docHeadingOrg
+        
+        accessibilityLabel = docHeading?.headingWithSubtitlesMlc?.value ??
+                             docHeading?.headingWithSubtitleWhiteMlc?.value ??
+                             R.Strings.add_documents_accessibility_title.localized()
+        
+        accessibilityHint = docHeading != nil ? R.Strings.document_general_magic_tap_hint.localized() :
+                                                R.Strings.add_documents_accessibility_hint.localized()
+        
         switch viewModel.documentData {
         case .single:
             bottomCardView.isHidden = true
@@ -181,6 +192,8 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
                 frontView?.setErrorDescriptionTrailing(offset: Constants.descriptionLabelTrailingOffset)
             }
         }
+        
+        setupAccessibility()
     }
     
     private func setupStackIcon(_ appearance: DocumentStackIconAppearance?) {
@@ -197,16 +210,31 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
         bottomCardView.backgroundColor = color ?? .white
     }
     
+    // MARK: - Accessibility
     private func setupAccessibility() {
-        cardStackView.isAccessibilityElement = true
-        cardStackView.accessibilityTraits = .button
-        cardStackView.accessibilityLabel = R.Strings.documents_card_stack_accessibility_label.localized()
+        isAccessibilityElement = true
+        accessibilityTraits = .staticText
+    }
+    
+    public override func accessibilityPerformMagicTap() -> Bool {
+        super.accessibilityPerformMagicTap()
+        guard let viewModel else { return false }
+        
+        viewModel.accessibilityActionsMenuCallBack?()
+        
+        return true
     }
     
     // MARK: - Actions
     func flip(for type: VerificationType? = nil) {
         guard let document = viewModel?.documentData.getValue() else { return }
         bottomCardShadowView.isHidden = true
+        
+        if let type, !backflipContainer.isHidden {
+            backView?.changeVerificationView(for: type)
+            UIAccessibility.post(notification: .layoutChanged, argument: self)
+            return
+        }
 
         if !frontContainer.isHidden {
             let backFlipAction: Callback = { [weak self] in self?.flip(for: type) }
@@ -230,9 +258,14 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
                 self.frontContainer.isHidden = !self.frontContainer.isHidden
                 self.backflipContainer.isHidden = !self.backflipContainer.isHidden
             },
-            completion: { [weak self, weak currentView] _ in
+            completion: { [weak self, weak currentView, weak nextView] isFinished in
                 currentView?.didHide()
                 self?.bottomCardShadowView.isHidden = self?.cardStackView.isHidden == true
+                
+                if isFinished {
+                    self?.accessibilityLabel = nextView?.accessibilityLabel
+                    UIAccessibility.post(notification: .layoutChanged, argument: self)
+                }
             }
         )
     }
