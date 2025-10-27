@@ -1,4 +1,3 @@
-
 import UIKit
 import Lottie
 import DiiaUIComponents
@@ -29,7 +28,8 @@ public class DSDocumentWithPhotoViewModel {
 }
 
 public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
-    
+    private weak var eventsHandler: DSConstructorEventHandler?
+
     private let docHeadingView = DSDocumentHeadingView()
     private let tableBlockTwoColumnsView = DSTableBlockTwoColumnsPlaneOrgView()
     private let tableBlockPlaneView = DSTableBlockPlaneOrgView()
@@ -55,8 +55,6 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
             docBottomView.configureAction(contextMenuCallback)
         }
     }
-    
-    public var tickerCallback: Callback?
     
     public override func setupSubviews() {
         translatesAutoresizingMaskIntoConstraints = false
@@ -158,15 +156,18 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
     /// - Parameters:
     ///   - viewModel: The viewModel to be processed. Can be `nil` if not applicable.
     ///   - shouldStopAfterErrorConfigured: A boolean flag indicating whether the configuring nested views should stop immediately if an `modelData.errorViewModel` exists and configured.
-    ///   - insuranceTicker: An optional specific insuranse ticker for handling events in `FloatingTextLabel`. Defaults to `nil`.
+    ///   - insuranceTicker: An optional specific insurance ticker for handling events in `FloatingTextLabel`. Defaults to `nil`.
     public func configure(for viewModel: DSDocumentWithPhotoViewModel?,
                           shouldStopAfterErrorConfigured: Bool = true,
                           insuranceTicker: DSTickerAtom? = nil) {
-        
-        guard let viewModel = viewModel, let data = viewModel.model else { return }
-        
-        guard let frontCard = viewModel.model?.currentLocalization() == .ua ? data.frontCard?.UA : data.frontCard?.EN else { return }
-        
+        guard let viewModel, let data = viewModel.model else {
+            return
+        }
+
+        guard let frontCard = viewModel.model?.currentLocalization() == .ua ? data.frontCard?.UA : data.frontCard?.EN else {
+            return
+        }
+
         if let docHeading = frontCard.first(where: {$0.docHeadingOrg != nil})?.docHeadingOrg {
             docHeadingView.configure(model: docHeading)
             docHeadingView.isHidden = false
@@ -178,9 +179,7 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
             configureForError(for: viewModel.model?.docData.fullName?.replacingOccurrences(of: " ", with: "\n"))
             if shouldStopAfterErrorConfigured { return }
         }
-        
         let imagesContent = viewModel.images
-        
         if let tableBlockTwoColumnsPlane = frontCard.first(where: {$0.tableBlockTwoColumnsPlaneOrg != nil})?.tableBlockTwoColumnsPlaneOrg {
             tableBlockTwoColumnsView.configure(models: tableBlockTwoColumnsPlane, imagesContent: imagesContent ?? [:])
             tableBlockTwoColumnsView.isHidden = false
@@ -204,13 +203,19 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
             subtitleLabel.isHidden = false
         }
         if let tableBlockOrg = frontCard.first(where: {$0.tableBlockPlaneOrg != nil})?.tableBlockPlaneOrg {
-            tableBlockPlaneView.configure(for: tableBlockOrg)
+            tableBlockPlaneView.configure(for: tableBlockOrg) { [weak self] event in
+                self?.eventsHandler?.handleEvent(event: event)
+            }
             tableBlockPlaneView.isHidden = false
         }
         if let boosterMlc = frontCard.first(where: {$0.smallEmojiPanelMlc != nil})?.smallEmojiPanelMlc {
             boosterView.configure(for: boosterMlc)
             boosterView.isHidden = false
         }
+    }
+
+    public func setEventsHandler(_ eventsHandler: DSConstructorEventHandler) {
+        self.eventsHandler = eventsHandler
     }
 
     public func setLoadingState(_ state: DSDocumentState) {
@@ -260,17 +265,13 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         containerView.accessibilityTraits = .staticText
     }
 
-    fileprivate func configureTicker(_ ticker: DSTickerAtom) {
-        tickerAtm.configure(with: ticker)
-        
-        if ticker.action != nil {
-            let insuranceTap = UITapGestureRecognizer.init(target: self, action: #selector(tickerAction(_:)))
-            tickerAtm.isUserInteractionEnabled = true
-            tickerAtm.addGestureRecognizer(insuranceTap)
+    private func configureTicker(_ ticker: DSTickerAtom) {
+        tickerAtm.configure(with: ticker) { [weak self] event in
+            self?.eventsHandler?.handleEvent(event: event)
         }
     }
     
-    fileprivate func setupErrorView() {
+    private func setupErrorView() {
         containerView.addSubview(errorView)
         errorView.anchor(top: nil,
                          leading: leadingAnchor,
@@ -279,7 +280,7 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         errorView.isHidden = true
     }
 
-    fileprivate func setupLoadingView() {
+    private func setupLoadingView() {
         addSubview(loadingView)
         loadingView.fillSuperview()
 
@@ -304,16 +305,11 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         tickerAtm.stopAnimation()
     }
     
-    @objc private func tickerAction(_ sender: UIButton) {
-        tickerCallback?()
-    }
-    
     // MARK: - VerifyDocumentViewProtocol
     public func verifyDocumentViewDidChangeLayout() {
         didChangeFocus(isFocused: false)
         didChangeFocus(isFocused: true)
     }
-    
 }
 
 extension DSDocumentWithPhotoView {

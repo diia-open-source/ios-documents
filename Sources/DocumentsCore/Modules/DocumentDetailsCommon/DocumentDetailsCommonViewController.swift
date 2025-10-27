@@ -43,21 +43,20 @@ public class DocumentDetailsCommonViewController: UIViewController {
 }
 
 extension DocumentDetailsCommonViewController: DocumentDetailsCommonView {
-    
     public func setup(with viewModel: DocumentDetailsCommonViewModel,
                       insuranceTicker: DSTickerAtom?) {
-        var fullInfo = viewModel.model?.fullInfo ?? []
-        
+        var bodyModel = viewModel.bodyModel(for: viewModel.additionalInfoId)
+
         if let ticker = insuranceTicker {
             let tickerAnyCodable = AnyCodable.dictionary([
                 Constants.tickerAtmKey: AnyCodable.fromEncodable(encodable: ticker)
             ])
-            fullInfo.insert(tickerAnyCodable, at: 1)
+            bodyModel.insert(tickerAnyCodable, at: 1)
         }
         
         setupFabric(images: viewModel.images)
-        let model = DSConstructorModel(topGroup: [], body: fullInfo)
-        
+        let model = DSConstructorModel(topGroup: [], body: bodyModel)
+
         let eventHandler: (ConstructorItemEvent) -> Void = { [weak viewModel] event in
             viewModel?.eventHandler?.handleEvent(event: event)
         }

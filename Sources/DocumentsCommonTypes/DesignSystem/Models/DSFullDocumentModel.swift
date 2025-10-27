@@ -1,4 +1,3 @@
-
 import Foundation
 import DiiaUIComponents
 import DiiaCommonTypes
@@ -77,6 +76,10 @@ public struct DSFullDocumentModel: StatusedExpirableProtocol {
 }
 
 public struct DSDocumentData: Codable, Hashable {
+    public struct AdditionalFullInfo: Codable {
+        public let id: String
+        public let fullInfo: [AnyCodable]
+    }
 
     public let docStatus: Int
     public let id: String
@@ -91,6 +94,7 @@ public struct DSDocumentData: Codable, Hashable {
     public let shareLocalization: LocalizationType?
     public let frontCardBackground: String?
     public let cover: Cover?
+    public let additionalFullInfo: [AdditionalFullInfo]?
 
     public init(docStatus: Int,
                 id: String,
@@ -104,7 +108,8 @@ public struct DSDocumentData: Codable, Hashable {
                 fullInfo: [AnyCodable]? = nil,
                 shareLocalization: LocalizationType? = nil,
                 frontCardBackground: String? = nil,
-                cover: Cover? = nil) {
+                cover: Cover? = nil,
+                additionalFullInfo: [AdditionalFullInfo]? = nil) {
         self.docStatus = docStatus
         self.id = id
         self.qr = qr
@@ -118,6 +123,7 @@ public struct DSDocumentData: Codable, Hashable {
         self.shareLocalization = shareLocalization
         self.frontCardBackground = frontCardBackground
         self.cover = cover
+        self.additionalFullInfo = additionalFullInfo
     }
 
     public func hash(into hasher: inout Hasher) {
@@ -194,6 +200,7 @@ public extension DSDocumentData {
         self.fullInfo = passport.fullInfo
         self.shareLocalization = shareLocalization
         self.cover = passport.cover
+        self.additionalFullInfo = passport.additionalFullInfo
     }
 }
 

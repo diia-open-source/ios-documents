@@ -7,7 +7,7 @@ let package = Package(
     name: "DiiaDocuments",
     defaultLocalization: "uk",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v15)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.

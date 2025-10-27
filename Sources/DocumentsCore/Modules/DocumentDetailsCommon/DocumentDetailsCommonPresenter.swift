@@ -12,8 +12,8 @@ public class DocumentDetailsCommonPresenter: DocumentDetailsCommonAction {
     private let bag = DisposeBag()
     
     public init(view: DocumentDetailsCommonView,
-         viewModel: DocumentDetailsCommonViewModel,
-         insuranceTicker: DSTickerAtom?) {
+                viewModel: DocumentDetailsCommonViewModel,
+                insuranceTicker: DSTickerAtom?) {
         self.view = view
         self.viewModel = viewModel
         self.insuranceTicker = insuranceTicker

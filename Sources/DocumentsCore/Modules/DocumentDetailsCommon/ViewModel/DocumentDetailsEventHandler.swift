@@ -5,7 +5,7 @@ import DiiaUIComponents
 import DiiaNetwork
 import DiiaDocumentsCommonTypes
 
-public class DocumentDetailsEventHandler: NSObject, DSConsructorEventHandler {
+public class DocumentDetailsEventHandler: NSObject, DSConstructorEventHandler {
     
     private let verificationRequest: (() -> Signal<ShareVerificationCodesModel, NetworkError>)?
     private let localisation: LocalizationType

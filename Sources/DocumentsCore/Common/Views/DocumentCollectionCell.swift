@@ -1,4 +1,3 @@
-
 import UIKit
 import DiiaCommonTypes
 import DiiaUIComponents
@@ -129,6 +128,8 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
             blur: Constants.shadowBlur)
         
         backflipContainer.isHidden = true
+        
+        setupAccessibility()
     }
     
     override func prepareForReuse() {

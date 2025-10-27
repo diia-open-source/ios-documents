@@ -1,4 +1,3 @@
-
 import UIKit
 import DiiaMVPModule
 import DiiaUIComponents
@@ -125,6 +124,9 @@ final class DocumentsCollectionViewController: UIViewController, Storyboarded {
                 return
             }
             cell?.setContentHidden(isHidden: !isVisible, animated: animated)
+            if isVisible {
+                UIAccessibility.post(notification: .layoutChanged, argument: cell)
+            }
         }
     }
     
