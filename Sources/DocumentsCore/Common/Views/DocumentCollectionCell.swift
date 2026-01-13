@@ -1,3 +1,4 @@
+
 import UIKit
 import DiiaCommonTypes
 import DiiaUIComponents
@@ -167,13 +168,12 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
         let data = viewModel.documentData.getValue()
         let frontCard = data.model?.currentLocalization() == .ua ? data.model?.frontCard?.UA : data.model?.frontCard?.EN
         let docHeading = frontCard?.first(where: {$0.docHeadingOrg != nil})?.docHeadingOrg
-        
-        accessibilityLabel = docHeading?.headingWithSubtitlesMlc?.value ??
-                             docHeading?.headingWithSubtitleWhiteMlc?.value ??
-                             R.Strings.add_documents_accessibility_title.localized()
-        
-        accessibilityHint = docHeading != nil ? R.Strings.document_general_magic_tap_hint.localized() :
-                                                R.Strings.add_documents_accessibility_hint.localized()
+        let docAccessibilityLabel: String = docHeading?.headingWithSubtitlesMlc?.value ??
+                                            docHeading?.headingWithSubtitleWhiteMlc?.value ??
+                                            R.Strings.add_documents_accessibility_title.localized()
+        let docAccessibilityHint: String = docHeading != nil ? R.Strings.document_general_magic_tap_hint.localized() :
+                                                       R.Strings.add_documents_accessibility_hint.localized()
+        accessibilityLabel = [docAccessibilityLabel, docAccessibilityHint].map({ $0 }).joined(separator: ",")
         
         switch viewModel.documentData {
         case .single:
@@ -213,8 +213,10 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
     
     // MARK: - Accessibility
     private func setupAccessibility() {
-        isAccessibilityElement = true
-        accessibilityTraits = .staticText
+        if UIAccessibility.isVoiceOverRunning {
+            isAccessibilityElement = true
+            accessibilityTraits = .staticText
+        }
     }
     
     public override func accessibilityPerformMagicTap() -> Bool {

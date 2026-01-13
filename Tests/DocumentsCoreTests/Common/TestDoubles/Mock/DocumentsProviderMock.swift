@@ -1,9 +1,10 @@
+
 import Foundation
 import DiiaMVPModule
 import DiiaDocumentsCommonTypes
 import DiiaDocumentsCore
 
-class DocumentsProviderMock: DocumentsProvider {
+final class DocumentsProviderMock: DocumentsProvider {
     let documents: [DocumentModel]
     
     init(documents: [DocumentModel]) {

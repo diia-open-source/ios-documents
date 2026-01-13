@@ -4,7 +4,7 @@ import DiiaUIComponents
 import DiiaDocumentsCommonTypes
 import DiiaCommonTypes
 
-public class DocumentDetailsCommonViewModel {
+public final class DocumentDetailsCommonViewModel {
     
     // MARK: - Properties
     public var model: DSDocumentData?

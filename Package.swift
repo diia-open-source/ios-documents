@@ -31,7 +31,7 @@ let package = Package(
         .package(url: "https://github.com/diia-open-source/ios-uicomponents.git", .upToNextMinor(from: Version(1, 0, 0))),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "4.3.0"),
         .package(url: "https://github.com/DeclarativeHub/ReactiveKit.git", .upToNextMinor(from: "3.16.2")),
-        .package(url: "https://github.com/airbnb/lottie-spm.git", exact: Version(4, 2, 0)),
+        .package(url: "https://github.com/airbnb/lottie-spm.git", exact: Version(4, 6, 0)),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

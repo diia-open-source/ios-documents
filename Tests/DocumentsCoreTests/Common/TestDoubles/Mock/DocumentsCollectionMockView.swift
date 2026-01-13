@@ -1,8 +1,9 @@
+
 import UIKit
 import DiiaMVPModule
 @testable import DiiaDocumentsCore
 
-class DocumentsCollectionMockView: UIViewController, DocumentsCollectionView {
+final class DocumentsCollectionMockView: UIViewController, DocumentsCollectionView {
     
     private(set) var isUpdateDocumentsCalled: Bool = false
     private(set) var isSetStatusTextCalled: Bool = false

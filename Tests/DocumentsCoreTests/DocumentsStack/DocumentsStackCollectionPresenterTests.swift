@@ -1,8 +1,9 @@
+
 import XCTest
 import DiiaDocumentsCommonTypes
 @testable import DiiaDocumentsCore
 
-class DocumentsStackCollectionPresenterTests: XCTestCase {
+final class DocumentsStackCollectionPresenterTests: XCTestCase {
     private var view: DocumentsCollectionMockView!
     private var documentAttributes: DocumentAttributesStub!
     private var holder: DocumentCollectionHolderMock!

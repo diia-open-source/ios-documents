@@ -1,8 +1,9 @@
+
 import UIKit
 import DiiaMVPModule
 @testable import DiiaDocumentsCore
 
-class DocumentsStackMockView: UIViewController, DocumentsStackView {
+final class DocumentsStackMockView: UIViewController, DocumentsStackView {
     private(set) var isSetupChildCalled = false
     private(set) var isSetupTitleCalled = false
     private(set) var isSetBackgroundImageCalled = false

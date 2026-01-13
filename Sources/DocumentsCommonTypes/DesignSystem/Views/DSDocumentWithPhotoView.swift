@@ -1,3 +1,4 @@
+
 import UIKit
 import Lottie
 import DiiaUIComponents
@@ -8,7 +9,7 @@ public enum DSDocumentState {
     case loading
 }
 
-public class DSDocumentWithPhotoViewModel {
+public final class DSDocumentWithPhotoViewModel {
     public var model: DSDocumentData?
     public var images: [DSDocumentContentData: UIImage]?
     public var docType: DocumentAttributesProtocol?
@@ -27,7 +28,7 @@ public class DSDocumentWithPhotoViewModel {
     }
 }
 
-public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
+public final class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
     private weak var eventsHandler: DSConstructorEventHandler?
 
     private let docHeadingView = DSDocumentHeadingView()
@@ -171,7 +172,7 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         if let docHeading = frontCard.first(where: {$0.docHeadingOrg != nil})?.docHeadingOrg {
             docHeadingView.configure(model: docHeading)
             docHeadingView.isHidden = false
-            accessibilityLabel = docHeading.headingWithSubtitlesMlc?.value ?? docHeading.headingWithSubtitleWhiteMlc?.value
+            containerView.accessibilityLabel = docHeading.headingWithSubtitlesMlc?.value ?? docHeading.headingWithSubtitleWhiteMlc?.value
         }
         if let errorVM = viewModel.errorViewModel {
             errorView.isHidden = false
@@ -261,8 +262,11 @@ public class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
     }
     
     private func setupAccessibility() {
-        containerView.isAccessibilityElement = true
-        containerView.accessibilityTraits = .staticText
+        accessibilityIdentifier = Constants.accessibilityIdentifier
+        if UIAccessibility.isVoiceOverRunning {
+            containerView.isAccessibilityElement = true
+            containerView.accessibilityTraits = .staticText
+        }
     }
 
     private func configureTicker(_ ticker: DSTickerAtom) {
@@ -331,5 +335,6 @@ extension DSDocumentWithPhotoView {
         static let animationDuration: CGFloat = 0.3
         static let visibleContainerViewAlpha: CGFloat = 1.0
         static let heightMultiplier: CGFloat = 0.05
+        static let accessibilityIdentifier = "doc_name_ua"
     }
 }

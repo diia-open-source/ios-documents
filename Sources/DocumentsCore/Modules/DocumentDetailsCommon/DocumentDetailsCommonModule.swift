@@ -4,7 +4,7 @@ import DiiaMVPModule
 import DiiaUIComponents
 import DiiaDocumentsCommonTypes
 
-public class DocumentDetailsCommonModule: BaseModule {
+public final class DocumentDetailsCommonModule: BaseModule {
     
     let view: DocumentDetailsCommonViewController
     let presenter: DocumentDetailsCommonPresenter

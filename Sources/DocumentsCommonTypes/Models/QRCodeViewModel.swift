@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaCommonTypes
@@ -15,7 +16,7 @@ public protocol QRCodeHolder: NSObjectProtocol {
     func statusChanged(status: QRCodeStatus)
 }
 
-public class QRCodeViewModel {
+public final class QRCodeViewModel {
     
     let docType: DocumentAttributesProtocol?
     let localization: LocalizationType

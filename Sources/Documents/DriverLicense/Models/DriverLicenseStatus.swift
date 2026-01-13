@@ -1,4 +1,4 @@
-import UIKit
+
 import DiiaCommonTypes
 
 public enum DriverLicenseStatus: Int, Codable, EnumDecodable {

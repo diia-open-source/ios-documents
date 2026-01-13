@@ -1,9 +1,10 @@
+
 import UIKit
 import DiiaCommonTypes
 import DiiaUIComponents
 import DiiaDocumentsCommonTypes
 
-class AddNewDocumentView: UIView, FrontViewProtocol {
+final class AddNewDocumentView: UIView, FrontViewProtocol {
     
     // MARK: - Outlets
     @IBOutlet weak private var addDocumentView: UIView!

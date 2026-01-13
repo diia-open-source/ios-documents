@@ -1,7 +1,8 @@
+
 import Foundation
 import DiiaDocumentsCore
 
-class DocumentsLoaderMock: DocumentsLoaderProtocol {
+final class DocumentsLoaderMock: DocumentsLoaderProtocol {
     private(set) var isUpdateIfNeededCalled = false
     private(set) var isAddListenerCalled = false
     private(set) var isRemoveListenerCalled = false

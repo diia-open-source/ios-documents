@@ -1,3 +1,4 @@
+
 import Foundation
 import ReactiveKit
 import DiiaNetwork
@@ -7,7 +8,7 @@ protocol AddDocumentAPIClientProtocol {
     func getDocsToAdd() -> Signal<AllDocsToAdd, NetworkError>
 }
 
-class AddDocumentAPIClient: ApiClient<AddDocumentAPI>, AddDocumentAPIClientProtocol {
+final class AddDocumentAPIClient: ApiClient<AddDocumentAPI>, AddDocumentAPIClientProtocol {
     public init(context: DocumentsCoreNetworkContext) {
         super.init()
         sessionManager = context.session

@@ -1,9 +1,10 @@
+
 import XCTest
 import ReactiveKit
 import DiiaDocumentsCommonTypes
 @testable import DiiaDocumentsCore
 
-class DocumentsCollectionPresenterTests: XCTestCase {
+final class DocumentsCollectionPresenterTests: XCTestCase {
     private var view: DocumentsCollectionMockView!
     private var holder: DocumentCollectionHolderMock!
     private var documentsProvider: DocumentsProviderMock!

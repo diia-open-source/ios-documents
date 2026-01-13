@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaNetwork
@@ -7,7 +8,7 @@ import DiiaUIComponents
 import DiiaDocumentsCommonTypes
 @testable import DiiaDocumentsCore
 
-class DocumentModelMock: DocumentModel {
+final class DocumentModelMock: DocumentModel {
     private(set) var isUpdateIfNeeded: Bool = false
     private let actions: [[Action]]
     

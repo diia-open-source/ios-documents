@@ -1,3 +1,4 @@
+
 import UIKit
 import Lottie
 import DiiaCommonTypes
@@ -5,7 +6,7 @@ import DiiaUIComponents
 
 /// design_system_code: docQROrg
 
-public class QRCodeBarcodeView: BaseCodeView, FlippableEmbeddedView {
+public final class QRCodeBarcodeView: BaseCodeView, FlippableEmbeddedView {
     
     // MARK: - Subviews
     private var animatorView = LottieAnimationView(name: "loader")

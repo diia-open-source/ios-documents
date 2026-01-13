@@ -5,7 +5,7 @@ import DiiaUIComponents
 
 public protocol DocumentDetailsCommonAction: BasePresenter { }
 
-public class DocumentDetailsCommonPresenter: DocumentDetailsCommonAction {
+public final class DocumentDetailsCommonPresenter: DocumentDetailsCommonAction {
     private unowned let view: DocumentDetailsCommonView
     private let viewModel: DocumentDetailsCommonViewModel
     private let insuranceTicker: DSTickerAtom?

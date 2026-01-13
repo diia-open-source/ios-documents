@@ -1,8 +1,9 @@
+
 import XCTest
 import DiiaDocumentsCommonTypes
 @testable import DiiaDocumentsCore
 
-class DocumentStackActionsFabricTests: XCTestCase {
+final class DocumentStackActionsFabricTests: XCTestCase {
     
     func test_getAction_singleDocument() {
         // Arrange

@@ -1,6 +1,7 @@
+
 import Foundation
 import DiiaDocumentsCommonTypes
 
-class FlipperStub: FlipperVerifyProtocol {
+final class FlipperStub: FlipperVerifyProtocol {
     func flip(for: VerificationType?) {}
 }

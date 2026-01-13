@@ -10,7 +10,7 @@ public protocol DocumentDetailsCommonView: BaseView {
                insuranceTicker: DSTickerAtom?)
 }
 
-public class DocumentDetailsCommonViewController: UIViewController {
+public final class DocumentDetailsCommonViewController: UIViewController {
     
     public var screenBrightnessService: ScreenBrightnessServiceProtocol?
     public var presenter: DocumentDetailsCommonAction!

@@ -1,9 +1,10 @@
+
 import UIKit
 import DiiaUIComponents
 import DiiaCommonTypes
 import DiiaDocumentsCommonTypes
 
-class DocumentActionSheetViewController: UIViewController, ChildSubcontroller {
+final class DocumentActionSheetViewController: UIViewController, ChildSubcontroller {
     
     // MARK: - Properties
     weak var container: ContainerProtocol?

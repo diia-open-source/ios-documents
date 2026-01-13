@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaNetwork
@@ -6,7 +7,7 @@ import DiiaCommonTypes
 import DiiaDocumentsCommonTypes
 @testable import DiiaDocumentsCore
 
-class DocumentsCollectionContextStub: DocumentsCollectionContext {
+final class DocumentsCollectionContextStub: DocumentsCollectionContext {
     
     let documentsLoader: DocumentsLoaderProtocol
     let docProvider: DocumentsProvider
@@ -36,7 +37,7 @@ class DocumentsCollectionContextStub: DocumentsCollectionContext {
     
 }
 
-class DocumentReorderingServiceStub: DocumentReorderingServiceProtocol {
+final class DocumentReorderingServiceStub: DocumentReorderingServiceProtocol {
     func docTypesOrder() -> [DocTypeCode] {
         return []
     }
@@ -54,13 +55,13 @@ class DocumentReorderingServiceStub: DocumentReorderingServiceProtocol {
     func updateOrdersIfNeeded() {}
 }
 
-class AddDocumentsServiceStub: AddDocumentsServiceProtocol {
+final class AddDocumentsServiceStub: AddDocumentsServiceProtocol {
     func setup(onAdded: @escaping AddDocumentCallback, onExists: @escaping AddDocumentCallback) {}
     
     func showAddDocuments(in view: BaseView, errorCallback: ((NetworkError) -> Void)?) {}
 }
 
-class BaseModuleStub: BaseModule {
+final class BaseModuleStub: BaseModule {
     func viewController() -> UIViewController {
         return UIViewController()
     }

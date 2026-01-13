@@ -1,3 +1,4 @@
+
 import UIKit
 import ReactiveKit
 import DiiaCommonTypes
@@ -6,7 +7,7 @@ import DiiaMVPModule
 import DiiaUIComponents
 import DiiaDocumentsCommonTypes
 
-class AddNewDocumentViewModel: DocumentModel {
+final class AddNewDocumentViewModel: DocumentModel {
     
     var addDocumentCallback: Callback
     var changeOrderCallback: Callback

@@ -1,3 +1,4 @@
+
 import Foundation
 import ReactiveKit
 import DiiaCommonTypes
@@ -17,7 +18,7 @@ protocol AddDocumentsServiceProtocol {
     func showAddDocuments(in view: BaseView, errorCallback: ((NetworkError) -> Void)?)
 }
 
-class AddDocumentsService: AddDocumentsServiceProtocol {
+final class AddDocumentsService: AddDocumentsServiceProtocol {
     private let apiClient: AddDocumentAPIClientProtocol
     private let addDocumentActionProvider: AddDocumentsActionProviderProtocol
 
