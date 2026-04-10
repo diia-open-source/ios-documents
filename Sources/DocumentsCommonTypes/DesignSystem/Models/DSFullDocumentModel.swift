@@ -163,11 +163,11 @@ public struct DSDocumentData: Codable, Hashable {
 public struct DataOrderConfigurations: Codable, Equatable {
     public let iconRight: IconCode
     public let label: String
-    public let description: String
+    public let description: String?
 
     public init(iconRight: IconCode,
                 label: String,
-                description: String) {
+                description: String?) {
         self.iconRight = iconRight
         self.label = label
         self.description = description
@@ -407,6 +407,7 @@ public struct DSDocumentModel: Codable, Equatable {
     public let docButtonHeadingOrg: DSDocumentHeading?
     public let chipStatusAtm: DSCardStatusChipModel?
     public let smallEmojiPanelMlc: DSSmallEmojiPanelMlcl?
+    public let dotChipStatusMlc: DSDotChipStatusMlcModel?
 
     public init(docHeadingOrg: DSDocumentHeading? = nil,
                 tableBlockTwoColumnsPlaneOrg: DSTableBlockTwoColumnPlaneOrg? = nil,
@@ -415,7 +416,8 @@ public struct DSDocumentModel: Codable, Equatable {
                 tickerAtm: DSTickerAtom? = nil,
                 docButtonHeadingOrg: DSDocumentHeading? = nil,
                 smallEmojiPanelMlc: DSSmallEmojiPanelMlcl? = nil,
-                chipStatusAtm: DSCardStatusChipModel? = nil) {
+                chipStatusAtm: DSCardStatusChipModel? = nil,
+                dotChipStatusMlc: DSDotChipStatusMlcModel? = nil) {
         self.docHeadingOrg = docHeadingOrg
         self.tableBlockTwoColumnsPlaneOrg = tableBlockTwoColumnsPlaneOrg
         self.tableBlockPlaneOrg = tableBlockPlaneOrg
@@ -424,6 +426,7 @@ public struct DSDocumentModel: Codable, Equatable {
         self.docButtonHeadingOrg = docButtonHeadingOrg
         self.smallEmojiPanelMlc = smallEmojiPanelMlc
         self.chipStatusAtm = nil
+        self.dotChipStatusMlc = dotChipStatusMlc
     }
     
     public func allPropertiesNil() -> Bool {
@@ -434,7 +437,8 @@ public struct DSDocumentModel: Codable, Equatable {
         tickerAtm == nil &&
         docButtonHeadingOrg == nil &&
         chipStatusAtm == nil &&
-        smallEmojiPanelMlc == nil
+        smallEmojiPanelMlc == nil &&
+        dotChipStatusMlc == nil
     }
 }
 

@@ -16,3 +16,28 @@ public final class DocumentsCommonConfiguration {
         self.screenBrightnessService = screenBrightnessService
     }
 }
+
+import UIKit
+
+public final class DocumentImageResolver: DSImageNameProvider {
+    private let imagesContent: [DSDocumentContentData: UIImage]
+    
+    public init(imagesContent: [DSDocumentContentData: UIImage]) {
+        self.imagesContent = imagesContent
+    }
+    
+    public func imageForCode(imageCode: String, placeholder: UIImage?) -> UIImage? {
+        guard let image = imageForCode(imageCode: imageCode) else { return placeholder }
+        return image
+    }
+    
+    public func imageForCode(imageCode: String?) -> UIImage? {
+        guard let imageCode, let key = DSDocumentContentData(rawValue: imageCode) else { return nil }
+        
+        return imagesContent[key]
+    }
+    
+    public func imageNameForCode(imageCode: String) -> String {
+        return imageCode
+    }
+}

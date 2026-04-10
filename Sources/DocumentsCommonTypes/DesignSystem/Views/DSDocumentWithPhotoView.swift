@@ -14,17 +14,20 @@ public final class DSDocumentWithPhotoViewModel {
     public var images: [DSDocumentContentData: UIImage]?
     public var docType: DocumentAttributesProtocol?
     public var errorViewModel: DocumentErrorViewModel?
-    
+    public var backgroundPlaceholder: UIImage?
+
     public init(
         model: DSDocumentData? = nil,
         images: [DSDocumentContentData : UIImage]? = nil,
         docType: DocumentAttributesProtocol? = nil,
-        errorViewModel: DocumentErrorViewModel? = nil
+        errorViewModel: DocumentErrorViewModel? = nil,
+        backgroundPlaceholder: UIImage? = nil
     ) {
         self.model = model
         self.images = images
         self.docType = docType
         self.errorViewModel = errorViewModel
+        self.backgroundPlaceholder = backgroundPlaceholder
     }
 }
 
@@ -182,7 +185,10 @@ public final class DSDocumentWithPhotoView: BaseCodeView, FrontViewProtocol {
         }
         let imagesContent = viewModel.images
         if let tableBlockTwoColumnsPlane = frontCard.first(where: {$0.tableBlockTwoColumnsPlaneOrg != nil})?.tableBlockTwoColumnsPlaneOrg {
-            tableBlockTwoColumnsView.configure(models: tableBlockTwoColumnsPlane, imagesContent: imagesContent ?? [:])
+            tableBlockTwoColumnsView.configure(
+                models: tableBlockTwoColumnsPlane,
+                imageProvider: DocumentImageResolver(imagesContent: imagesContent ?? [:])
+            )
             tableBlockTwoColumnsView.isHidden = false
         }
         if let ticker = frontCard.first(where: {$0.tickerAtm != nil})?.tickerAtm {

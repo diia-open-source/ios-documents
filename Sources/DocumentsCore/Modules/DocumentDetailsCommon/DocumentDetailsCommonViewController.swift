@@ -68,7 +68,9 @@ extension DocumentDetailsCommonViewController: DocumentDetailsCommonView {
     }
     
     private func setupFabric(images: [DSDocumentContentData: UIImage]) {
-        let twoColumnBuilder = DSTableBlockTwoColumnsOrgBuilder(imagesContent: images)
+        let twoColumnBuilder = DSTableBlockTwoColumnsOrgBuilder(
+            imageProvider: DocumentImageResolver(imagesContent: images)
+        )
         viewFabric.setBuilder(twoColumnBuilder)
         let tickerBuilder = DSTickerAtmBuilder(padding: Constants.tickerAtmPadding)
         viewFabric.setBuilder(tickerBuilder)
