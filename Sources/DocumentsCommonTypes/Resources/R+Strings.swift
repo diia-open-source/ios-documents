@@ -30,6 +30,8 @@ internal extension R {
         case documents_collection_accessibility_verification_view_hint
         case document_general_error_codes_not_loaded
         case document_general_error_codes_not_loaded_en
+        case document_back_view_accessibility_announce
+        case document_verification_expiration_time
 
         // MARK: - Errors
         

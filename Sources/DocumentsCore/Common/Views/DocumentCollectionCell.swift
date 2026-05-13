@@ -61,6 +61,8 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
     
     var isFlipped: Bool { frontContainer.isHidden }
     
+    private var isMagicTapped: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -166,14 +168,7 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
         configureFront(with: viewModel.documentData.getValue())
         
         let data = viewModel.documentData.getValue()
-        let frontCard = data.model?.currentLocalization() == .ua ? data.model?.frontCard?.UA : data.model?.frontCard?.EN
-        let docHeading = frontCard?.first(where: {$0.docHeadingOrg != nil})?.docHeadingOrg
-        let docAccessibilityLabel: String = docHeading?.headingWithSubtitlesMlc?.value ??
-                                            docHeading?.headingWithSubtitleWhiteMlc?.value ??
-                                            R.Strings.add_documents_accessibility_title.localized()
-        let docAccessibilityHint: String = docHeading != nil ? R.Strings.document_general_magic_tap_hint.localized() :
-                                                       R.Strings.add_documents_accessibility_hint.localized()
-        accessibilityLabel = [docAccessibilityLabel, docAccessibilityHint].map({ $0 }).joined(separator: ",")
+        accessibilityLabel = data.accessibilityDescription
         
         switch viewModel.documentData {
         case .single:
@@ -213,17 +208,29 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
     
     // MARK: - Accessibility
     private func setupAccessibility() {
-        if UIAccessibility.isVoiceOverRunning {
-            isAccessibilityElement = true
-            accessibilityTraits = .staticText
-        }
+        accessibilityIdentifier = Constants.accessibilityIdentifier
+        isAccessibilityElement = true
+        updateCustomActions()
     }
     
-    public override func accessibilityPerformMagicTap() -> Bool {
-        super.accessibilityPerformMagicTap()
-        guard let viewModel else { return false }
+    private func updateCustomActions() {
+        let actionName = isMagicTapped ? R.Strings.document_accessibility_hide_details.localized() : R.Strings.document_accessibility_show_details.localized()
         
-        viewModel.accessibilityActionsMenuCallBack?()
+        let toggleAction = UIAccessibilityCustomAction(
+            name: actionName,
+            target: self,
+            selector: #selector(handleAccessibilityAction)
+        )
+        
+        self.accessibilityCustomActions = [toggleAction]
+    }
+    
+    @objc private func handleAccessibilityAction() -> Bool {
+        self.isMagicTapped.toggle()
+        self.isAccessibilityElement = !self.isMagicTapped
+        updateCustomActions()
+
+        UIAccessibility.post(notification: .layoutChanged, argument: self)
         
         return true
     }
@@ -231,6 +238,9 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
     // MARK: - Actions
     func flip(for type: VerificationType? = nil) {
         guard let document = viewModel?.documentData.getValue() else { return }
+        isMagicTapped = false
+        isAccessibilityElement = true
+        updateCustomActions()
         bottomCardShadowView.isHidden = true
         
         if let type, !backflipContainer.isHidden {
@@ -261,12 +271,11 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
                 self.frontContainer.isHidden = !self.frontContainer.isHidden
                 self.backflipContainer.isHidden = !self.backflipContainer.isHidden
             },
-            completion: { [weak self, weak currentView, weak nextView] isFinished in
+            completion: { [weak self, weak currentView] isFinished in
                 currentView?.didHide()
                 self?.bottomCardShadowView.isHidden = self?.cardStackView.isHidden == true
                 
                 if isFinished {
-                    self?.accessibilityLabel = nextView?.accessibilityLabel
                     UIAccessibility.post(notification: .layoutChanged, argument: self)
                 }
             }
@@ -276,6 +285,12 @@ final class DocumentCollectionCell: UICollectionViewCell, Reusable, FlipperVerif
     func shouldHide() {
         if !backflipContainer.isHidden {
             flip()
+        }
+        
+        if isMagicTapped {
+            isMagicTapped = false
+            isAccessibilityElement = true
+            updateCustomActions()
         }
     }
     
@@ -327,5 +342,6 @@ extension DocumentCollectionCell {
         static let bottomCardHeight: CGFloat = 8
         static let bottomCardInsets: UIEdgeInsets = .init(top: 40, left: 8, bottom: 24, right: 8)
         static let bottomCardShadowInsets: UIEdgeInsets = .init(top: 80, left: 16, bottom: 0, right: 16)
+        static let accessibilityIdentifier = "doc_name_ua"
     }
 }

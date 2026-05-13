@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Alamofire/Alamofire.git",
       "state" : {
-        "revision" : "d120af1e8638c7da36c8481fd61a66c0c08dc4fc",
-        "version" : "5.4.4"
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/diia-open-source/ios-commonservices.git",
       "state" : {
-        "revision" : "9f1ede552fb8c25db28210971130203da46b4ad1",
-        "version" : "1.0.15"
+        "revision" : "7a2936cf8f055b1bced720b1808152fcc3e20567",
+        "version" : "1.0.16"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/diia-open-source/ios-commontypes.git",
       "state" : {
-        "revision" : "70d8dcee3475ae525f95842d9a671485741264b5",
-        "version" : "1.0.22"
+        "revision" : "11524b3b54ee9415648e06c57284bba189715c39",
+        "version" : "1.0.23"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/diia-open-source/ios-network.git",
       "state" : {
-        "revision" : "e64e05aac4eda9e40331bc94110545ea585de39c",
-        "version" : "1.0.13"
+        "revision" : "784169bea58b292dd6be34d127a769f07c3a7c24",
+        "version" : "1.0.14"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/diia-open-source/ios-uicomponents.git",
       "state" : {
-        "revision" : "a33b70ce5de2cca431143e6b331006e07f5055ac",
-        "version" : "1.0.25"
+        "revision" : "b9b2e08e790a17c6ab63d98ae34dfa6c991f8701",
+        "version" : "1.0.26"
       }
     },
     {

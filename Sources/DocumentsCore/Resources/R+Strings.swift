@@ -18,13 +18,15 @@ internal extension R {
         case documents_collection_accessibility_page_control_hint
         case documents_collection_accessibility_reachability_error
         case documents_card_stack_accessibility_label
-        case document_general_magic_tap_hint
         case add_documents_accessibility_title
         case add_documents_accessibility_hint
 
         case document_general_retry
         case document_general_retry_en
         case document_open_in_stack_accessibility
+        case document_accessibility_show_details
+        case document_accessibility_hide_details
+        case document_add_new_document_accessibility
         
         // MARK: - Errors
         

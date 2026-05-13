@@ -66,7 +66,6 @@ final class DocumentsCollectionViewController: UIViewController, Storyboarded {
         
         setupLongGestureRecognizerOnCollection()
         dateLabelTopFromDocumentCenterConstraint.constant = DocumentsLayoutProvider.cardHeight/2 + Constants.pageInset
-        setupAccessibility()
         
         presenter.configureView()
     }

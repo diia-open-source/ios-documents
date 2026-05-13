@@ -42,6 +42,8 @@ public final class QRCodeBarcodeView: BaseCodeView, FlippableEmbeddedView {
         
         animatorView.loopMode = .loop
         animatorView.backgroundBehavior = .pauseAndRestore
+        
+        isAccessibilityElement = false
     }
     
     private func setupTitle() {
@@ -190,7 +192,6 @@ extension QRCodeBarcodeView: QRCodeHolder {
             self.clearViews()
             setup(qrLink: link, barcode: barcode)
         }
-        configureAccessibility(for: status)
     }
 }
 

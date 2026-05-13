@@ -6,10 +6,10 @@ import DiiaUIComponents
 import DiiaCommonTypes
 import DiiaDocumentsCommonTypes
 
-final class DocumentActionSheetModule: BaseModule {
+public final class DocumentActionSheetModule: BaseModule {
     private let view: DocumentActionSheetViewController
     
-    init(actions: [[Action]], codeAction: ((VerificationType) -> Void)?) {
+    public init(actions: [[Action]], codeAction: ((VerificationType) -> Void)?) {
         view = DocumentActionSheetViewController()
         view.codeAction = codeAction
         view.actions = actions

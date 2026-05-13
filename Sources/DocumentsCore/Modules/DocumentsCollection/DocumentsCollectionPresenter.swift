@@ -57,8 +57,9 @@ final class DocumentsCollectionPresenter: DocumentsCollectionAction, DocumentsLo
     func configureView() {
         ReachabilityHelper.shared
             .statusSignal
-            .observeNext { [weak self] isReachable in self?.onNetworkStatus(isReachable: isReachable) }
-            .dispose(in: bag)
+            .observe(observer: self, triggerNow: false) { [weak self] isReachable in
+                self?.onNetworkStatus(isReachable: isReachable)
+            }
         
         NotificationCenter.default.addObserver(self, selector: #selector(documentsWasUpdated), name: DocumentsConstants.Notifications.documentsWasReordered, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(documentsModeWasSwitched(notification:)), name: DocumentsConstants.Notifications.documentsModeWasSwitched, object: nil)

@@ -30,3 +30,5 @@
 "document_general_error_codes_not_loaded" = "Коди для перевірки\nне завантажено";
 "document_general_error_codes_not_loaded_en" = "Verification codes failed\nto upload";
 "document_general_qr_code_header" = "QR-КОД";
+"document_back_view_accessibility_announce" = "Картку перевернуто: відображається %@. %@";
+"document_verification_expiration_time" = "%@ %d хв";

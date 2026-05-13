@@ -28,6 +28,10 @@ final class AddNewDocumentViewModel: DocumentModel {
     var images = [DSDocumentContentData: UIImage]()
     var orderConfigurations: DataOrderConfigurations? { return nil }
     var errorViewModel: DocumentErrorViewModel?
+    
+    var accessibilityDescription: String? {
+        return R.Strings.document_add_new_document_accessibility.localized()
+    }
 
     lazy var frontView: FrontViewProtocol = {
         let view: AddNewDocumentView = AddNewDocumentView.fromNib(bundle: Bundle.module)

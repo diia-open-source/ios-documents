@@ -69,6 +69,7 @@ public final class QRCodeViewModel {
                             self.timerText = object.timerText ?? R.Strings.document_general_session_time.localized()
                             self.startTimer()
                         }
+                        announceAccessibilityIfNeed()
                     case .failed(let error):
                         switch error {
                         case .noInternet:
@@ -94,6 +95,27 @@ public final class QRCodeViewModel {
                     }
                 }
                 .dispose(in: self.bag)
+        }
+    }
+    
+    private func announceAccessibilityIfNeed() {
+        if UIAccessibility.isVoiceOverRunning {
+            var docType: String {
+                switch verificationType {
+                case .qr:
+                    return R.Strings.general_qr_code.localized()
+                case .barcode:
+                    return R.Strings.general_barcode.localized()
+                case nil:
+                    return R.Strings.general_qr_code.localized()
+                }
+            }
+            
+            let expirationTime = (Int(deprecationLength) / 60) % 60
+            let timeSuffix = expirationTime > 0 ? String(format: R.Strings.document_verification_expiration_time.localized(), timerText, expirationTime) : ""
+            let cardFlipped = String(format: R.Strings.document_back_view_accessibility_announce.localized(), docType, timeSuffix)
+            
+            UIAccessibility.post(notification: .announcement, argument: cardFlipped)
         }
     }
     

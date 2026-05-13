@@ -15,6 +15,7 @@ public protocol DocumentModel: AnyObject {
     var orderConfigurations: DataOrderConfigurations? { get }
     var isDocumentValid: Bool { get }
     var frontView: FrontViewProtocol { get }
+    var accessibilityDescription: String? { get }
     func backView(for type: VerificationType?, flippingAction: @escaping Callback) -> FlippableEmbeddedView?
     
     func sharingRequest() -> Signal<ShareLinkModel, NetworkError>?
@@ -28,6 +29,10 @@ public extension DocumentModel {
     var documentName: String? { return model?.docData.docName }
     var orderConfigurations: DataOrderConfigurations? { return nil }
     var isDocumentValid: Bool { return true }
+    
+    var accessibilityDescription: String? {
+        return model?.docData.docName
+    }
 
     func updateIfNeeded() {}
 }

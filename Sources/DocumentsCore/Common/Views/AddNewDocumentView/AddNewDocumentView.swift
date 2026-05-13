@@ -25,6 +25,7 @@ final class AddNewDocumentView: UIView, FrontViewProtocol {
         
         setupStaticViews()
         setupFonts()
+        setupAccessibility()
     }
     
     // MARK: - Setup
@@ -41,6 +42,22 @@ final class AddNewDocumentView: UIView, FrontViewProtocol {
     private func setupFonts() {
         addDocumentLabel.font = FontBook.smallHeadingFont
         changeOrderLabel.font = FontBook.smallHeadingFont
+    }
+    
+    private func setupAccessibility() {
+        addDocumentView.isAccessibilityElement = false
+        addDocumentLabel.isAccessibilityElement = false
+        
+        changeOrderView.isAccessibilityElement = false
+        changeOrderLabel.isAccessibilityElement = false
+        
+        addDocumentButton.isAccessibilityElement = true
+        addDocumentButton.accessibilityTraits = .button
+        addDocumentButton.accessibilityLabel = R.Strings.document_general_add_document.localized()
+        
+        changeOrderButton.isAccessibilityElement = true
+        changeOrderButton.accessibilityTraits = .button
+        changeOrderButton.accessibilityLabel = R.Strings.document_general_change_documents_order.localized()
     }
     
     // MARK: - Public
