@@ -51,3 +51,19 @@
 
 // MARK: - Menu
 "menu_faq" = "Питання та відповіді";
+
+// MARK: - Passport Booklet
+"booklet_title" = "Паспорт громадянина України";
+"booklet_flag" = "Прапор України";
+"booklet_photo" = "Фотографія власника паспорта";
+"booklet_no_photo" = "Фото відсутнє";
+"booklet_signature" = "Підпис власника паспорта";
+"booklet_last_name" = "Прізвище";
+"booklet_first_name" = "Ім’я";
+"booklet_middle_name" = "По батькові";
+"booklet_birth_date" = "Дата народження";
+"booklet_birth_place" = "Місце народження";
+"booklet_sex" = "Стать";
+"booklet_issued_at" = "Дата видачі";
+"booklet_issued_by" = "Ким виданий";
+"booklet_valid_until" = "Дійсний до";
