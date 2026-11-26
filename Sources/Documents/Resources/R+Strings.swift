@@ -8,6 +8,22 @@ internal extension R {
         case general_translate_ukrainian
         case general_translate_english
 
+        // MARK: - Passport Booklet
+        case booklet_title
+        case booklet_flag
+        case booklet_photo
+        case booklet_no_photo
+        case booklet_signature
+        case booklet_last_name
+        case booklet_first_name
+        case booklet_middle_name
+        case booklet_birth_date
+        case booklet_birth_place
+        case booklet_sex
+        case booklet_issued_at
+        case booklet_issued_by
+        case booklet_valid_until
+
         // MARK: - DriverLicense
         case driver_error_photo
         case driver_error_photo_descr
